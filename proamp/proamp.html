@@ -2,198 +2,209 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PROAMP</title>
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="stylesheet" href="./proamp.css" />
   </head>
   <body>
     <div class="page">
       <div class="stage">
-        <div class="proamp">
-          <!-- =================== MAIN MODULE =================== -->
-          <div class="module module--main">
-            <div class="module__inner">
-              <div class="title">
-                <div class="title__thingie">
-                  <div class="title__thingie__triangle"></div>
-                  <div class="title__thingie__triangle"></div>
-                </div>
-                <div class="title__bar title__bar--first"></div>
-                <div class="title__text">PROAMP</div>
-                <div class="title__bar title__bar--second"></div>
-                <div class="title__buttons">
-                  <button class="title__button title__button--minimise" title="Minimise"></button>
-                  <button class="title__button title__button--maximise" title="Maximise"></button>
-                  <button class="title__button title__button--close" title="Close"></button>
-                </div>
-              </div>
 
-              <div class="content">
-                <div class="content__inner main">
-                  <!-- LEFT: visualizer + time -->
-                  <div class="main__viz">
-                    <div class="bar"></div><div class="bar"></div><div class="bar"></div>
-                    <div class="bar"></div><div class="bar"></div><div class="bar"></div>
-                    <div class="bar"></div><div class="bar"></div><div class="bar"></div>
-                  </div>
-                  <div class="main__time" id="time">0:01</div>
+        <!-- ═══════════════════════════════════════════
+             MAIN WINDOW  275 × 116 px
+        ══════════════════════════════════════════════ -->
+        <div class="window win-main">
 
-                  <!-- TRACK marquee -->
-                  <div class="main__track">
-                    <div class="main__track__inner" id="track">
-                      Track 07 (3:10) &mdash; Proamp Demo
-                    </div>
-                  </div>
+          <!-- title bar (14px) -->
+          <div class="title-bar">
+            <div class="tb-btn tb-logo"></div>
+            <div class="tb-text">PROAMP</div>
+            <div class="tb-btn tb-minimize"></div>
+            <div class="tb-btn tb-shade"></div>
+            <div class="tb-btn tb-close"></div>
+          </div>
 
-                  <!-- bitrate / samplerate / mono-stereo -->
-                  <div class="main__bitrate">128</div>
-                  <div class="main__bitrate-label">kbps</div>
-                  <div class="main__samplerate">44</div>
-                  <div class="main__samplerate-label">khz</div>
-                  <div class="main__monostereo">
-                    <span class="ms ms--mono">mono</span>
-                    <span class="ms ms--stereo on">stereo</span>
-                  </div>
+          <!-- clutter-bar left:10 top:22 — O/A/I/D/V -->
+          <div class="clutter-bar">
+            <div class="cb-btn cb-o">O</div>
+            <div class="cb-btn cb-a">A</div>
+            <div class="cb-btn cb-i">I</div>
+            <div class="cb-btn cb-d">D</div>
+            <div class="cb-btn cb-v">V</div>
+          </div>
 
-                  <!-- PROAMP corner logo -->
-                  <div class="main__logo">PROAMP</div>
+          <!-- play/pause indicator left:26 top:28 -->
+          <div class="play-pause-indicator playing" id="ppIndicator"></div>
 
-                  <!-- volume / balance sliders -->
-                  <div class="main__volume">
-                    <div class="vslider">
-                      <div class="vslider__track"></div>
-                      <div class="vslider__thumb" style="left:46px"></div>
-                    </div>
-                  </div>
-                  <div class="main__balance">
-                    <div class="bslider">
-                      <div class="bslider__track"></div>
-                      <div class="bslider__thumb" style="left:14px"></div>
-                    </div>
-                  </div>
+          <!-- time display left:39 top:26 59×13 -->
+          <div class="time-display" id="timeDisplay">
+            <span class="lcd" id="timeText">0:24</span>
+          </div>
 
-                  <!-- EQ and PL buttons -->
-                  <div class="main__eq-button">
-                    <span class="led on"></span>EQ
-                  </div>
-                  <div class="main__pl-button">
-                    <span class="led on"></span>PL
-                  </div>
+          <!-- visualizer left:24 top:43 75×10 -->
+          <div class="visualizer">
+            <canvas id="vizCanvas" width="75" height="10"></canvas>
+          </div>
 
-                  <!-- Scrubber -->
-                  <div class="main__scrubber">
-                    <div class="main__scrubber__thumb" id="scrubThumb" style="left:30px"></div>
-                  </div>
-
-                  <!-- Transport buttons -->
-                  <button class="tb tb--prev"   data-act="prev"  ></button>
-                  <button class="tb tb--play"   data-act="play"  ></button>
-                  <button class="tb tb--pause"  data-act="pause" ></button>
-                  <button class="tb tb--stop"   data-act="stop"  ></button>
-                  <button class="tb tb--next"   data-act="next"  ></button>
-                  <button class="tb tb--eject"  data-act="eject" ></button>
-
-                  <button class="toggle-btn shuffle-btn" id="shuffleBtn">
-                    <span class="toggle-btn__led"></span>shuffle
-                  </button>
-                  <button class="toggle-btn repeat-btn" id="repeatBtn">
-                    <span class="toggle-btn__led"></span>repeat
-                  </button>
-                </div>
-              </div>
+          <!-- marquee left:111 top:24 154×12 -->
+          <div class="marquee-wrap">
+            <div class="marquee-inner" id="marquee">
+              2. PROAMP - TRACK 07 (3:10) &bull; 128KBPS 44KHZ STEREO &bull; PROAMP
             </div>
           </div>
 
-          <!-- =================== EQUALIZER MODULE =================== -->
-          <div class="module module--eq">
-            <div class="module__inner">
-              <div class="title">
-                <div class="title__bar title__bar--first"></div>
-                <div class="title__text">PROAMP EQUALIZER</div>
-                <div class="title__bar title__bar--second"></div>
-                <div class="title__buttons">
-                  <button class="title__button title__button--maximise"></button>
-                  <button class="title__button title__button--close"></button>
-                </div>
-              </div>
+          <!-- info row: kbps / khz / mono / stereo — starting at y=41 -->
+          <div class="info-row">
+            <span class="info-val" id="kbpsVal">128</span>
+            <span class="info-lbl">kbps</span>
+            <span class="info-val" id="khzVal">44</span>
+            <span class="info-lbl">khz</span>
+            <span class="ms-mono" id="msMono">mono</span>
+            <span class="ms-stereo on" id="msStereo">stereo</span>
+          </div>
 
-              <div class="content">
-                <div class="content__inner eq">
-                  <button class="eq__on"   id="eqOn"  ><span class="led on"></span>on</button>
-                  <button class="eq__auto" id="eqAuto"><span class="led"></span>auto</button>
+          <!-- volume left:107 top:57 68×13 -->
+          <div class="volume-wrap">
+            <input class="h-slider" id="volume" type="range" min="0" max="100" value="75" />
+          </div>
 
-                  <button class="eq__presets">presets</button>
+          <!-- balance left:177 top:57 38×13 -->
+          <div class="balance-wrap">
+            <input class="h-slider" id="balance" type="range" min="-100" max="100" value="0" />
+          </div>
 
-                  <div class="eq__scale">
-                    <div class="eq__scale__line">+12 db</div>
-                    <div class="eq__scale__line eq__scale__line--mid">0</div>
-                    <div class="eq__scale__line">-12 db</div>
-                  </div>
+          <!-- EQ / PL buttons left:219 top:58 -->
+          <div class="window-btns">
+            <div class="win-btn eq-btn on" id="eqBtn">EQ</div>
+            <div class="win-btn pl-btn on" id="plBtn">PL</div>
+          </div>
 
-                  <div class="eq__sliders">
-                    <div class="eq__slider eq__slider--preamp">
-                      <div class="eq__slider__track"></div>
-                      <div class="eq__slider__thumb" data-pos="50"></div>
-                    </div>
-                    <div class="eq__slider"><div class="eq__slider__track"></div><div class="eq__slider__thumb" data-pos="62"></div></div>
-                    <div class="eq__slider"><div class="eq__slider__track"></div><div class="eq__slider__thumb" data-pos="60"></div></div>
-                    <div class="eq__slider"><div class="eq__slider__track"></div><div class="eq__slider__thumb" data-pos="55"></div></div>
-                    <div class="eq__slider"><div class="eq__slider__track"></div><div class="eq__slider__thumb" data-pos="50"></div></div>
-                    <div class="eq__slider"><div class="eq__slider__track"></div><div class="eq__slider__thumb" data-pos="48"></div></div>
-                    <div class="eq__slider"><div class="eq__slider__track"></div><div class="eq__slider__thumb" data-pos="45"></div></div>
-                    <div class="eq__slider"><div class="eq__slider__track"></div><div class="eq__slider__thumb" data-pos="42"></div></div>
-                    <div class="eq__slider"><div class="eq__slider__track"></div><div class="eq__slider__thumb" data-pos="48"></div></div>
-                    <div class="eq__slider"><div class="eq__slider__track"></div><div class="eq__slider__thumb" data-pos="55"></div></div>
-                    <div class="eq__slider"><div class="eq__slider__track"></div><div class="eq__slider__thumb" data-pos="62"></div></div>
-                  </div>
+          <!-- position scrubber left:16 top:72 248×10 -->
+          <div class="position-wrap">
+            <input class="pos-slider" id="position" type="range" min="0" max="100" value="13" />
+          </div>
 
-                  <div class="eq__labels">
-                    <span>preamp</span>
-                    <span>60</span><span>170</span><span>310</span><span>600</span>
-                    <span>1k</span><span>3k</span><span>6k</span><span>12k</span>
-                    <span>14k</span><span>16k</span>
-                  </div>
-                </div>
-              </div>
+          <!-- transport buttons (base top:88) -->
+          <div class="actions">
+            <div class="action-btn btn-previous" id="btnPrev" title="Previous"></div>
+            <div class="action-btn btn-play"     id="btnPlay" title="Play"></div>
+            <div class="action-btn btn-pause"    id="btnPause" title="Pause"></div>
+            <div class="action-btn btn-stop"     id="btnStop" title="Stop"></div>
+            <div class="action-btn btn-next"     id="btnNext" title="Next"></div>
+          </div>
+
+          <!-- eject left:136 top:89 22×16 -->
+          <div class="action-btn btn-eject" id="btnEject" title="Eject"></div>
+
+          <!-- shuffle / repeat left:164 top:89 -->
+          <div class="shuffle-repeat">
+            <div class="sr-btn shuffle-btn" id="shuffleBtn">
+              <span class="sr-led" id="shuffleLed"></span>SHUFFLE
+            </div>
+            <div class="sr-btn repeat-btn" id="repeatBtn">
+              <span class="sr-led" id="repeatLed"></span>RPT
             </div>
           </div>
 
-          <!-- =================== PLAYLIST MODULE =================== -->
-          <div class="module module--playlist">
-            <div class="module__inner">
-              <div class="title">
-                <div class="title__bar title__bar--first"></div>
-                <div class="title__text">PROAMP PLAYLIST</div>
-                <div class="title__bar title__bar--second"></div>
-                <div class="title__buttons">
-                  <button class="title__button title__button--maximise"></button>
-                  <button class="title__button title__button--close"></button>
-                </div>
-              </div>
+          <!-- about left:253 top:91 -->
+          <div class="about-btn" title="About PROAMP"></div>
+        </div><!-- /win-main -->
 
-              <div class="content">
-                <div class="content__inner playlist">
-                  <div class="playlist__rows" id="playlist"></div>
 
-                  <div class="playlist__bottom">
-                    <button class="pl-btn">add</button>
-                    <button class="pl-btn">rem</button>
-                    <button class="pl-btn">sel</button>
-                    <button class="pl-btn">misc</button>
-                    <div class="playlist__time" id="plTime">3 + 10:4 + 22</div>
-                    <div class="playlist__opts">
-                      <span>list</span>
-                      <span>opts</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
+        <!-- ═══════════════════════════════════════════
+             EQUALIZER WINDOW  275 × 116 px
+        ══════════════════════════════════════════════ -->
+        <div class="window win-eq" id="winEq">
+          <div class="title-bar">
+            <div class="tb-text">PROAMP EQUALIZER</div>
+            <div class="tb-btn tb-shade"></div>
+            <div class="tb-btn tb-close" id="eqCloseBtn"></div>
+          </div>
+
+          <!-- ON left:14 top:18   AUTO left:40 top:18 -->
+          <div class="eq-on-btn on" id="eqOnBtn">
+            <span class="eq-led on" id="eqOnLed"></span>ON
+          </div>
+          <div class="eq-auto-btn" id="eqAutoBtn">
+            <span class="eq-led" id="eqAutoLed"></span>AUTO
+          </div>
+
+          <!-- PRESETS left:217 top:18 -->
+          <div class="eq-presets-btn">PRESETS ▾</div>
+
+          <!-- EQ graph left:86 top:17 113×19 -->
+          <div class="eq-graph" id="eqGraph"></div>
+
+          <!-- scale labels left:45 -->
+          <div class="eq-scale">
+            <div class="eq-scale-lbl" style="top:36px">+12 DB</div>
+            <div class="eq-scale-lbl" style="top:62px">0</div>
+            <div class="eq-scale-lbl" style="top:90px">-12 DB</div>
+          </div>
+
+          <!-- EQ band sliders -->
+          <div class="eq-bands">
+            <div class="eq-band eq-band--preamp" data-band="preamp">
+              <input class="eq-slider" type="range" min="-12" max="12" value="0" />
+            </div>
+            <div class="eq-band" data-band="60">   <input class="eq-slider" type="range" min="-12" max="12" value="4" /></div>
+            <div class="eq-band" data-band="170">  <input class="eq-slider" type="range" min="-12" max="12" value="3" /></div>
+            <div class="eq-band" data-band="310">  <input class="eq-slider" type="range" min="-12" max="12" value="2" /></div>
+            <div class="eq-band" data-band="600">  <input class="eq-slider" type="range" min="-12" max="12" value="0" /></div>
+            <div class="eq-band" data-band="1k">   <input class="eq-slider" type="range" min="-12" max="12" value="-1" /></div>
+            <div class="eq-band" data-band="3k">   <input class="eq-slider" type="range" min="-12" max="12" value="-2" /></div>
+            <div class="eq-band" data-band="6k">   <input class="eq-slider" type="range" min="-12" max="12" value="-2" /></div>
+            <div class="eq-band" data-band="12k">  <input class="eq-slider" type="range" min="-12" max="12" value="-1" /></div>
+            <div class="eq-band" data-band="14k">  <input class="eq-slider" type="range" min="-12" max="12" value="1" /></div>
+            <div class="eq-band" data-band="16k">  <input class="eq-slider" type="range" min="-12" max="12" value="3" /></div>
+          </div>
+
+          <!-- frequency labels -->
+          <div class="eq-labels">
+            <span>PREAMP</span>
+            <span>60</span><span>170</span><span>310</span><span>600</span>
+            <span>1K</span><span>3K</span><span>6K</span><span>12K</span>
+            <span>14K</span><span>16K</span>
+          </div>
+        </div><!-- /win-eq -->
+
+
+        <!-- ═══════════════════════════════════════════
+             PLAYLIST WINDOW  275 × 166 px
+        ══════════════════════════════════════════════ -->
+        <div class="window win-playlist" id="winPlaylist">
+          <div class="pl-top">
+            <div class="pl-top-left"></div>
+            <div class="pl-top-left-fill"></div>
+            <div class="pl-top-title">PROAMP PLAYLIST</div>
+            <div class="pl-top-right-fill"></div>
+            <div class="pl-top-right"></div>
+            <div id="plCloseBtn">×</div>
+          </div>
+
+          <div class="pl-middle">
+            <div class="pl-middle-left"></div>
+            <div class="pl-middle-center">
+              <div class="pl-tracks" id="playlist"></div>
+            </div>
+            <div class="pl-middle-right"></div>
+          </div>
+
+          <div class="pl-bottom">
+            <div class="pl-menu-btn" id="plAdd">ADD</div>
+            <div class="pl-menu-btn" id="plRem">REM</div>
+            <div class="pl-menu-btn" id="plSel">SEL</div>
+            <div class="pl-menu-btn" id="plMisc">MISC</div>
+            <div class="pl-running-time" id="plTime">3 + 10:4 + 22</div>
+            <div class="pl-bottom-right">
+              <div class="pl-menu-btn">LIST</div>
+              <div class="pl-menu-btn">OPTS</div>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
+        </div><!-- /win-playlist -->
+
+      </div><!-- /stage -->
+    </div><!-- /page -->
 
     <script src="./proamp.js"></script>
   </body>
