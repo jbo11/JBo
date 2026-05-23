@@ -249,8 +249,8 @@ body.dark-header .site-footer{color:var(--dark)}
 .contact-info li i{color:var(--accent);width:20px}
 .contact-form .row{display:grid;grid-template-columns:1fr 1fr;gap:18px}
 .contact-form input,.contact-form textarea{
-  width:100%;padding:14px 0;font-family:inherit;font-size:14px;border:0;border-bottom:1px solid #ddd;
-  background:transparent;outline:none;transition:.3s;margin-bottom:18px;color:var(--dark);
+  width:100%;padding:14px 0;font-family:inherit;font-size:16px;border:0;border-bottom:1px solid #ddd;
+  background:transparent;outline:none;transition:.3s;margin-bottom:18px;color:var(--light);
 }
 .contact-form input:focus,.contact-form textarea:focus{border-color:var(--accent)}
 .contact-form textarea{resize:none}
