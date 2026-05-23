@@ -255,7 +255,7 @@ body.dark-header .site-footer{color:var(--dark)}
 .contact-form input:focus,.contact-form textarea:focus{border-color:var(--accent)}
 .contact-form textarea{resize:none}
 .contact-form button{
-  margin-top:10px;padding:14px 32px;background:var(--accent);color:var(--dark);font-weight:600;
+  margin-top:10px;padding:14px 32px;background:var(--accent);color:var(--light);font-weight:600;
   font-size:12px;letter-spacing:3px;text-transform:uppercase;display:inline-flex;align-items:center;gap:10px;
   transition:.3s;
 }
