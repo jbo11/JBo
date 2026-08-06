@@ -263,7 +263,10 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
-// Gravity XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+// Gravity
+// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
 function triggerGravity() {
   const activePage = document.querySelector(".page.is-active");
   if (!activePage) return;
@@ -357,7 +360,9 @@ gravityBtn.addEventListener("click", (e) => {
   triggerGravity(); // starts gravity
 });
 
-// MUSIC XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+// MUSIC
+// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 const musicToggle = document.getElementById("musicToggle");
 
@@ -410,3 +415,122 @@ musicToggle.addEventListener("click", async (e) => {
 
   el.style.display = (el.style.display === "none") ? "block" : "none";
 });
+
+// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+// Konami Code
+// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+(() => {
+  const KONAMI_CODE = [
+    "ArrowUp",
+    "ArrowUp",
+    "ArrowDown",
+    "ArrowDown",
+    "ArrowLeft",
+    "ArrowRight",
+    "ArrowLeft",
+    "ArrowRight",
+    "b",
+    "a"
+  ];
+
+  let input = [];
+
+  document.addEventListener("keydown", (e) => {
+    const key =
+      e.key.length === 1 ? e.key.toLowerCase() : e.key;
+
+    input.push(key);
+
+    // Keep only the most recent keys
+    if (input.length > KONAMI_CODE.length) {
+      input.shift();
+    }
+
+    const matched = KONAMI_CODE.every(
+      (k, i) => input[i] === k
+    );
+
+    if (matched) {
+      input = [];
+      startEmojiRain();
+    }
+  });
+
+  function startEmojiRain() {
+    const emojis = [
+      "🎉",
+      "✨",
+      "🌈",
+      "🍕",
+      "🦄",
+      "😂",
+      "💎",
+      "🚀",
+      "⭐",
+      "🎈"
+    ];
+
+    const style = document.createElement("style");
+    style.textContent = `
+      @keyframes emojiFall {
+        from {
+          transform: translateY(-80px) rotate(0deg);
+          opacity: 1;
+        }
+        to {
+          transform: translateY(110vh) rotate(720deg);
+          opacity: 0;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+
+    const total = 150;
+
+    for (let i = 0; i < total; i++) {
+      const emoji = document.createElement("div");
+      emoji.textContent =
+        emojis[Math.floor(Math.random() * emojis.length)];
+
+      emoji.style.position = "fixed";
+      emoji.style.left = Math.random() * 100 + "vw";
+      emoji.style.top = "-50px";
+      emoji.style.fontSize = 20 + Math.random() * 30 + "px";
+      emoji.style.pointerEvents = "none";
+      emoji.style.zIndex = "999999";
+      emoji.style.animation = `emojiFall ${
+        2 + Math.random() * 3
+      }s linear forwards`;
+      emoji.style.animationDelay = Math.random() * 2 + "s";
+
+      document.body.appendChild(emoji);
+
+      emoji.addEventListener("animationend", () => {
+        emoji.remove();
+      });
+    }
+
+    // Optional message
+    const banner = document.createElement("div");
+    banner.textContent = "🎮 KONAMI CODE ACTIVATED! 🎮";
+    banner.style.cssText = `
+      position:fixed;
+      top:20px;
+      left:50%;
+      transform:translateX(-50%);
+      padding:16px 28px;
+      background:#111;
+      color:#fff;
+      border-radius:12px;
+      font:700 20px system-ui;
+      z-index:1000000;
+      box-shadow:0 10px 30px rgba(0,0,0,.35);
+    `;
+
+    document.body.appendChild(banner);
+
+    setTimeout(() => banner.remove(), 3000);
+  }
+})();
+
