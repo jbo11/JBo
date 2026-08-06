@@ -512,7 +512,7 @@ musicToggle.addEventListener("click", async (e) => {
     }
 
     // Optional message
-    const banner = document.createElement("div");
+    /*const banner = document.createElement("div");
     banner.textContent = "🎮 KONAMI CODE ACTIVATED! 🎮";
     banner.style.cssText = `
       position:fixed;
@@ -526,7 +526,7 @@ musicToggle.addEventListener("click", async (e) => {
       font:700 20px system-ui;
       z-index:1000000;
       box-shadow:0 10px 30px rgba(0,0,0,.35);
-    `;
+    `;*/
 
     document.body.appendChild(banner);
 
