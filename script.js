@@ -9,259 +9,729 @@
 
   let current = 0;
   let isAnimating = false;
-  const isMobile = () => window.matchMedia('(max-width: 900px)').matches;
 
-  // Pages whose top area is light (header should be dark)
-  // Pages with DARK background → header should be WHITE
-  const darkPages = ['page1','page2','page4','page5','page6','page8'];
+  const isMobile = () =>
+    window.matchMedia('(max-width: 900px)').matches;
 
-  function setActive(idx, push=true) {
+  // Pages with DARK backgrounds → header should stay white
+  const darkPages = [
+    'page1',
+    'page2',
+    'page4',
+    'page5',
+    'page6',
+    'page8'
+  ];
+
+  function setActive(idx, push = true) {
     if (idx < 0 || idx >= sections.length) return;
+
     current = idx;
 
-    fp.style.willChange = "transform";
+    fp.style.willChange = 'transform';
 
     if (!isMobile()) {
       fp.style.transform = `translateY(-${idx * 100}vh)`;
-    } else {
-      sections[idx].scrollIntoView({behavior:'smooth', block:'start'});
-    }
-
-    sections.forEach((s,i) => s.classList.toggle('is-active', i === idx));
-    dots.forEach((d,i) => d.classList.toggle('active', i === idx));
-
-    const id = sections[idx].id;
-
-    // 👉 KEY FIX
-    document.body.classList.toggle('dark-header', !darkPages.includes(id));
-
-    label.textContent = dots[idx]?.dataset.label || '';
-
-    if (id === 'page2') {
-      document.querySelectorAll('.bar span').forEach(b => {
-        b.style.width = b.dataset.w + '%';
+    } else if (push) {
+      // Only scroll on direct navigation.
+      // Scroll-spy calls setActive(..., false),
+      // preventing mobile scroll jumping.
+      sections[idx].scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
       });
     }
 
-    if (push && history.replaceState) {
-      history.replaceState(null,'','#' + id);
+    sections.forEach((section, i) => {
+      section.classList.toggle(
+        'is-active',
+        i === idx
+      );
+    });
+
+    dots.forEach((dot, i) => {
+      dot.classList.toggle(
+        'active',
+        i === idx
+      );
+    });
+
+    const id = sections[idx].id;
+
+    document.body.classList.toggle(
+      'dark-header',
+      !darkPages.includes(id)
+    );
+
+    if (label) {
+      label.textContent =
+        dots[idx]?.dataset.label || '';
+    }
+
+    // Animate skill bars
+    if (id === 'page2') {
+      document
+        .querySelectorAll('.bar span')
+        .forEach((bar) => {
+          bar.style.width =
+            bar.dataset.w + '%';
+        });
+    }
+
+    if (
+      push &&
+      history.replaceState
+    ) {
+      history.replaceState(
+        null,
+        '',
+        '#' + id
+      );
     }
   }
 
-  // Wheel scroll
+  // ============================================================
+  // DESKTOP WHEEL SCROLL
+  // ============================================================
+
   let wheelLock = false;
   let lastScrollTime = 0;
 
-  // Scrolling Resume Section
-  document.querySelectorAll('.resume-col').forEach(el => {
-    el.addEventListener('wheel', (e) => {
-      const atTop = el.scrollTop <= 0;
-      const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight;
+  // Resume section internal scrolling
+  document
+    .querySelectorAll('.resume-col')
+    .forEach((el) => {
+      el.addEventListener(
+        'wheel',
+        (e) => {
+          const atTop =
+            el.scrollTop <= 0;
 
-      // 👇 If still scrollable inside → LOCK page scroll
-      if (!(atTop && e.deltaY < 0) && !(atBottom && e.deltaY > 0)) {
-        e.stopPropagation();   // prevents page change
+          const atBottom =
+            el.scrollTop +
+              el.clientHeight >=
+            el.scrollHeight;
+
+          if (
+            !(atTop && e.deltaY < 0) &&
+            !(atBottom && e.deltaY > 0)
+          ) {
+            e.stopPropagation();
+            return;
+          }
+        },
+        {
+          passive: false
+        }
+      );
+    });
+
+  window.addEventListener(
+    'wheel',
+    (e) => {
+      if (isMobile()) return;
+
+      // Allow native scrolling inside resume panels
+      if (
+        e.target.closest(
+          '.resume-col'
+        )
+      ) {
         return;
       }
 
-      // 👇 If reached edges → allow page scroll
-      // do nothing (event bubbles to window)
-    }, { passive: false });
-  });
-  // end
+      const now = Date.now();
 
-  window.addEventListener('wheel', (e) => {
-  if (isMobile()) return;
-
-  // 🔥 If mouse is inside resume-col → DO NOTHING (allow native scroll)
-  if (e.target.closest('.resume-col')) return;
-
-    const now = Date.now();
-    if (now - lastScrollTime < 800) return; // throttle
-
-    if (wheelLock || isAnimating) {
-      e.preventDefault();
-      return;
-    }
-
-    e.preventDefault();
-
-    // Ignore micro scrolls (trackpads cause jitter)
-    if (Math.abs(e.deltaY) < 40) return;
-
-    wheelLock = true;
-    isAnimating = true;
-    lastScrollTime = now;
-
-    if (e.deltaY > 0) {
-      setActive(Math.min(current + 1, sections.length - 1));
-    } else {
-      setActive(Math.max(current - 1, 0));
-    }
-
-    setTimeout(() => {
-      wheelLock = false;
-      isAnimating = false;
-    }, 900);
-  }, { passive: false });
-
-  // Keyboard
-  window.addEventListener('keydown', (e) => {
-    if (isMobile()) return;
-    if (['ArrowDown','PageDown',' '].includes(e.key)) { e.preventDefault(); setActive(Math.min(current + 1, sections.length - 1)); }
-    if (['ArrowUp','PageUp'].includes(e.key))    { e.preventDefault(); setActive(Math.max(current - 1, 0)); }
-    if (e.key === 'Home') { e.preventDefault(); setActive(0); }
-    if (e.key === 'End')  { e.preventDefault(); setActive(sections.length - 1); }
-  });
-
-  // Touch swipe
-  let touchY = null;
-  window.addEventListener('touchstart', (e) => { touchY = e.touches[0].clientY; }, { passive:true });
-  window.addEventListener('touchend', (e) => {
-    if (isMobile() || touchY === null) return;
-    const diff = touchY - e.changedTouches[0].clientY;
-    if (Math.abs(diff) < 60) return;
-    if (diff > 0) setActive(Math.min(current + 1, sections.length - 1));
-    else setActive(Math.max(current - 1, 0));
-    touchY = null;
-  });
-
-  // Dot nav clicks
-  dots.forEach((d, i) => d.addEventListener('click', (e) => {
-    e.preventDefault();
-    setActive(i);
-  }));
-
-  // Anchor links inside menu / hero
-  document.querySelectorAll('a[href^="#page"]').forEach(a => {
-    a.addEventListener('click', (e) => {
-      const id = a.getAttribute('href').slice(1);
-      const idx = sections.findIndex(s => s.id === id);
-      if (idx >= 0) {
-        e.preventDefault();
-        setActive(idx);
-        overlay.classList.remove('open');
+      if (
+        now - lastScrollTime <
+        800
+      ) {
+        return;
       }
-    });
-  });
 
-  // Menu
-  menuToggle.addEventListener('click', () => overlay.classList.add('open'));
-  closeMenu.addEventListener('click', () => overlay.classList.remove('open'));
+      if (
+        wheelLock ||
+        isAnimating
+      ) {
+        e.preventDefault();
+        return;
+      }
 
-  // Resize handler
-  window.addEventListener('resize', () => {
-    if (isMobile()) {
-      fp.style.transform = '';
-    } else {
-      fp.style.transform = `translateY(-${current * 100}vh)`;
+      e.preventDefault();
+
+      // Ignore trackpad micro movements
+      if (
+        Math.abs(e.deltaY) <
+        40
+      ) {
+        return;
+      }
+
+      wheelLock = true;
+      isAnimating = true;
+      lastScrollTime = now;
+
+      if (e.deltaY > 0) {
+        setActive(
+          Math.min(
+            current + 1,
+            sections.length - 1
+          )
+        );
+      } else {
+        setActive(
+          Math.max(
+            current - 1,
+            0
+          )
+        );
+      }
+
+      setTimeout(() => {
+        wheelLock = false;
+        isAnimating = false;
+      }, 900);
+    },
+    {
+      passive: false
     }
-  });
+  );
 
-  // Mobile scroll-spy
-  let scrollTick = false;
-  window.addEventListener('scroll', () => {
-    if (!isMobile() || scrollTick) return;
-    scrollTick = true;
-    requestAnimationFrame(() => {
-      const mid = window.scrollY + window.innerHeight / 2;
-      let idx = 0;
-      sections.forEach((s,i) => { if (s.offsetTop <= mid) idx = i; });
-      if (idx !== current) setActive(idx, false);
-      scrollTick = false;
-    });
-  });
+  // ============================================================
+  // DESKTOP KEYBOARD NAVIGATION
+  // ============================================================
 
-  // Contact form
-  const form = document.getElementById('contactForm');
-  if (form) form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const btn = form.querySelector('button');
-    const original = btn.innerHTML;
-    btn.innerHTML = 'Sent <i class="fas fa-check"></i>';
-    btn.style.background = '#1d1d1d';
-    btn.style.color = '#fff';
-    form.reset();
-    setTimeout(() => { btn.innerHTML = original; btn.style.background=''; btn.style.color=''; }, 2200);
-  });
+  window.addEventListener(
+    'keydown',
+    (e) => {
+      if (isMobile()) return;
 
-  // Init based on hash & when "← Back to Works" is clicked
-  let initIdx = 0;
-const hash = window.location.hash.slice(1);
+      if (
+        [
+          'ArrowDown',
+          'PageDown',
+          ' '
+        ].includes(e.key)
+      ) {
+        e.preventDefault();
 
-if (hash) {
-  const found = sections.findIndex(s => s.id === hash);
-  if (found !== -1) {
-    initIdx = found;
+        setActive(
+          Math.min(
+            current + 1,
+            sections.length - 1
+          )
+        );
+      }
+
+      if (
+        [
+          'ArrowUp',
+          'PageUp'
+        ].includes(e.key)
+      ) {
+        e.preventDefault();
+
+        setActive(
+          Math.max(
+            current - 1,
+            0
+          )
+        );
+      }
+
+      if (e.key === 'Home') {
+        e.preventDefault();
+        setActive(0);
+      }
+
+      if (e.key === 'End') {
+        e.preventDefault();
+
+        setActive(
+          sections.length - 1
+        );
+      }
+    }
+  );
+
+  // ============================================================
+  // TOUCH SWIPE — DESKTOP/TABLET FULLPAGE ONLY
+  // ============================================================
+
+  let touchY = null;
+
+  window.addEventListener(
+    'touchstart',
+    (e) => {
+      touchY =
+        e.touches[0].clientY;
+    },
+    {
+      passive: true
+    }
+  );
+
+  window.addEventListener(
+    'touchend',
+    (e) => {
+      // On mobile we want natural scrolling
+      if (
+        isMobile() ||
+        touchY === null
+      ) {
+        return;
+      }
+
+      const diff =
+        touchY -
+        e.changedTouches[0]
+          .clientY;
+
+      if (
+        Math.abs(diff) <
+        60
+      ) {
+        return;
+      }
+
+      if (diff > 0) {
+        setActive(
+          Math.min(
+            current + 1,
+            sections.length - 1
+          )
+        );
+      } else {
+        setActive(
+          Math.max(
+            current - 1,
+            0
+          )
+        );
+      }
+
+      touchY = null;
+    }
+  );
+
+  // ============================================================
+  // DOT NAVIGATION
+  // ============================================================
+
+  dots.forEach(
+    (dot, i) => {
+      dot.addEventListener(
+        'click',
+        (e) => {
+          e.preventDefault();
+          setActive(i);
+        }
+      );
+    }
+  );
+
+  // ============================================================
+  // OVERLAY MENU
+  // ============================================================
+
+  function setMenuOpen(open) {
+    if (!overlay) return;
+
+    overlay.classList.toggle(
+      'open',
+      open
+    );
+
+    document.body.classList.toggle(
+      'menu-open',
+      open
+    );
+
+    if (menuToggle) {
+      menuToggle.setAttribute(
+        'aria-expanded',
+        String(open)
+      );
+    }
   }
-}
 
-// 🔥 disable animation on first load
-fp.style.transition = "none";
-setActive(initIdx, false);
+  if (menuToggle) {
+    menuToggle.setAttribute(
+      'aria-expanded',
+      'false'
+    );
 
-// re-enable after paint
-setTimeout(() => {
-  fp.style.transition = "";
-}, 50);
+    menuToggle.addEventListener(
+      'click',
+      () => {
+        setMenuOpen(true);
+      }
+    );
+  }
+
+  if (closeMenu) {
+    closeMenu.addEventListener(
+      'click',
+      () => {
+        setMenuOpen(false);
+      }
+    );
+  }
+
+  // Anchor links
+  document
+    .querySelectorAll(
+      'a[href^="#page"]'
+    )
+    .forEach((link) => {
+      link.addEventListener(
+        'click',
+        (e) => {
+          const id =
+            link
+              .getAttribute('href')
+              .slice(1);
+
+          const idx =
+            sections.findIndex(
+              (section) =>
+                section.id === id
+            );
+
+          if (idx < 0) return;
+
+          e.preventDefault();
+
+          setActive(idx);
+
+          setMenuOpen(false);
+        }
+      );
+    });
+
+  document.addEventListener(
+    'keydown',
+    (e) => {
+      if (
+        e.key === 'Escape' &&
+        overlay?.classList.contains(
+          'open'
+        )
+      ) {
+        setMenuOpen(false);
+      }
+    }
+  );
+
+  // ============================================================
+  // RESIZE
+  // ============================================================
+
+  window.addEventListener(
+    'resize',
+    () => {
+      if (isMobile()) {
+        fp.style.transform = '';
+      } else {
+        fp.style.transform =
+          `translateY(-${
+            current * 100
+          }vh)`;
+      }
+    }
+  );
+
+  // ============================================================
+  // MOBILE SCROLL SPY
+  // ============================================================
+
+  let scrollTick = false;
+
+  window.addEventListener(
+    'scroll',
+    () => {
+      if (
+        !isMobile() ||
+        scrollTick
+      ) {
+        return;
+      }
+
+      scrollTick = true;
+
+      requestAnimationFrame(
+        () => {
+          const mid =
+            window.scrollY +
+            window.innerHeight /
+              2;
+
+          let idx = 0;
+
+          sections.forEach(
+            (section, i) => {
+              if (
+                section.offsetTop <=
+                mid
+              ) {
+                idx = i;
+              }
+            }
+          );
+
+          if (idx !== current) {
+            // Important:
+            // false = update state
+            // without scrollIntoView()
+            setActive(
+              idx,
+              false
+            );
+          }
+
+          scrollTick = false;
+        }
+      );
+    }
+  );
+
+  // ============================================================
+  // CONTACT FORM
+  // ============================================================
+
+  const form =
+    document.getElementById(
+      'contactForm'
+    );
+
+  if (form) {
+    form.addEventListener(
+      'submit',
+      (e) => {
+        e.preventDefault();
+
+        const btn =
+          form.querySelector(
+            'button'
+          );
+
+        if (!btn) return;
+
+        const original =
+          btn.innerHTML;
+
+        btn.innerHTML =
+          'Sent <i class="fas fa-check"></i>';
+
+        btn.style.background =
+          '#1d1d1d';
+
+        btn.style.color =
+          '#fff';
+
+        form.reset();
+
+        setTimeout(() => {
+          btn.innerHTML =
+            original;
+
+          btn.style.background =
+            '';
+
+          btn.style.color =
+            '';
+        }, 2200);
+      }
+    );
+  }
+
+  // ============================================================
+  // INITIAL PAGE
+  // ============================================================
+
+  let initIdx = 0;
+
+  const hash =
+    window.location.hash.slice(
+      1
+    );
+
+  if (hash) {
+    const found =
+      sections.findIndex(
+        (section) =>
+          section.id === hash
+      );
+
+    if (found !== -1) {
+      initIdx = found;
+    }
+  }
+
+  // Disable animation during initial positioning
+  fp.style.transition =
+    'none';
+
+  setActive(
+    initIdx,
+    false
+  );
+
+  // Re-enable after first paint
+  setTimeout(() => {
+    fp.style.transition = '';
+  }, 50);
 })();
 
-// Accent Picker
-const DEFAULT_ACCENT = "#f4ca30";
 
-const settingsBtn = document.getElementById("settingsBtn");
-const modal = document.getElementById("settingsModal");
-const accentPicker = document.getElementById("accentPicker");
-const resetBtn = document.getElementById("resetAccent");
+// ============================================================
+// ACCENT COLOR PICKER
+// ============================================================
 
-// Load saved or default
-const savedAccent = localStorage.getItem("accent") || DEFAULT_ACCENT;
-document.documentElement.style.setProperty("--accent", savedAccent);
-accentPicker.value = savedAccent;
+const DEFAULT_ACCENT =
+  '#f4ca30';
 
-// Open / toggle modal
-settingsBtn.addEventListener("click", (e) => {
-  e.preventDefault();
-  modal.classList.toggle("hidden");
-  settingsBtn.classList.toggle("active");
-});
+const settingsBtn =
+  document.getElementById(
+    'settingsBtn'
+  );
 
-// Change accent
-accentPicker.addEventListener("input", (e) => {
-  const color = e.target.value;
-  document.documentElement.style.setProperty("--accent", color);
-  localStorage.setItem("accent", color);
-});
+const modal =
+  document.getElementById(
+    'settingsModal'
+  );
 
-// Reset to default
-resetBtn.addEventListener("click", () => {
-  document.documentElement.style.setProperty("--accent", DEFAULT_ACCENT);
-  accentPicker.value = DEFAULT_ACCENT;
-  localStorage.removeItem("accent");
-});
+const accentPicker =
+  document.getElementById(
+    'accentPicker'
+  );
 
-// Click outside to close
-document.addEventListener("click", (e) => {
-  const modalContent = modal.querySelector(".modal-content");
+const resetBtn =
+  document.getElementById(
+    'resetAccent'
+  );
 
-  if (!modal.classList.contains("hidden")) {
-    if (
-      !modalContent.contains(e.target) &&
-      !settingsBtn.contains(e.target)
-    ) {
-      modal.classList.add("hidden");
-      settingsBtn.classList.remove("active");
+if (
+  settingsBtn &&
+  modal &&
+  accentPicker &&
+  resetBtn
+) {
+  const savedAccent =
+    localStorage.getItem(
+      'accent'
+    ) ||
+    DEFAULT_ACCENT;
+
+  document.documentElement
+    .style.setProperty(
+      '--accent',
+      savedAccent
+    );
+
+  accentPicker.value =
+    savedAccent;
+
+  settingsBtn.addEventListener(
+    'click',
+    (e) => {
+      e.preventDefault();
+
+      modal.classList.toggle(
+        'hidden'
+      );
+
+      settingsBtn.classList.toggle(
+        'active'
+      );
     }
-  }
-});
+  );
 
-// ESC key to close
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") {
-    modal.classList.add("hidden");
-    settingsBtn.classList.remove("active");
-  }
-});
+  accentPicker.addEventListener(
+    'input',
+    (e) => {
+      const color =
+        e.target.value;
+
+      document.documentElement
+        .style.setProperty(
+          '--accent',
+          color
+        );
+
+      localStorage.setItem(
+        'accent',
+        color
+      );
+    }
+  );
+
+  resetBtn.addEventListener(
+    'click',
+    () => {
+      document.documentElement
+        .style.setProperty(
+          '--accent',
+          DEFAULT_ACCENT
+        );
+
+      accentPicker.value =
+        DEFAULT_ACCENT;
+
+      localStorage.removeItem(
+        'accent'
+      );
+    }
+  );
+
+  document.addEventListener(
+    'click',
+    (e) => {
+      const modalContent =
+        modal.querySelector(
+          '.modal-content'
+        );
+
+      if (
+        !modal.classList.contains(
+          'hidden'
+        ) &&
+        modalContent &&
+        !modalContent.contains(
+          e.target
+        ) &&
+        !settingsBtn.contains(
+          e.target
+        )
+      ) {
+        modal.classList.add(
+          'hidden'
+        );
+
+        settingsBtn.classList.remove(
+          'active'
+        );
+      }
+    }
+  );
+
+  document.addEventListener(
+    'keydown',
+    (e) => {
+      if (
+        e.key === 'Escape'
+      ) {
+        modal.classList.add(
+          'hidden'
+        );
+
+        settingsBtn.classList.remove(
+          'active'
+        );
+      }
+    }
+  );
+}
 
 // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 // Gravity
