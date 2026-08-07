@@ -350,7 +350,7 @@ body.dark-header .site-footer{color:var(--dark)}
 /* ============= COLOR ACCENT ============= */
 :root { --accent: #f4ca30; }
 .settings-btn { position: fixed; bottom: 20px; right: 20px; font-size: 20px; padding: 10px; cursor: pointer; }
-.modal { position: fixed; height: 100px; width: 100px; bottom: 70px; right: 20px; background: #1e1e1e; border-radius: 10px; padding: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+.modal { position: fixed; height: 100px; width: 100px; bottom: 70px; right: 115px; background: #1e1e1e; border-radius: 10px; padding: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
 .hidden { display: none; }
 .modal-content h4 { font-size: 12px; margin-bottom: 7px; color: #fff; text-align: center; }
 .color-row { display: flex; align-items: center; gap: 10px; }
@@ -360,6 +360,9 @@ body.dark-header .site-footer{color:var(--dark)}
 .reset-btn:hover { background: #fff; color: #2a2a2a; }
 #settingsBtn.active i { transform: rotate(90deg); transition: 0.3s ease; }
 #accentPicker { position: fixed; bottom: 420px; right: 120px; width: 40px; height: 40px; opacity: 0; z-index: 9999; cursor: pointer; }
+#settingsBtn { position: relative; font-size: 18px; }
+#settingsBtn::after { content: "Give the theme a fresh coat of paint!"; position: absolute; bottom: 140%; right: 0; background: #1d1d1d; color: #fff; font-size: 11px; padding: 6px 10px; border-radius: 4px; white-space: nowrap; opacity: 0; transform: translateY(5px); pointer-events: none; transition: 0.2s ease; }
+#settingsBtn:hover::after { opacity: 1; transform: translateY(0); }
 
 /* ============= GRAVITY ============= */
 #gravityBtn { position: relative; font-size: 18px; }
@@ -370,12 +373,19 @@ body.dark-header .site-footer{color:var(--dark)}
 #musicPlayer {
   position: fixed;
   bottom: 250px;
-  right: 280px;
+  right: 220px;
   width: 0;
   height: 0;
   z-index: 9999;
 }
 
-#winamp-container {
-  position: relative;
-}
+#winamp-container {position: relative;}
+
+#musicToggle { position: relative; font-size: 18px; }
+#musicToggle::after { content: "Put on some tunes!"; position: absolute; bottom: 140%; right: 0; background: #1d1d1d; color: #fff; font-size: 11px; padding: 6px 10px; border-radius: 4px; white-space: nowrap; opacity: 0; transform: translateY(5px); pointer-events: none; transition: 0.2s ease; }
+#musicToggle:hover::after { opacity: 1; transform: translateY(0); }
+
+/* ============= EASTER EGG ============= */
+#easterEgg { position: relative; font-size: 18px; }
+#easterEgg::after { content: "I need 30 lives! Execute the code..."; position: absolute; bottom: 140%; right: 0; background: #1d1d1d; color: #fff; font-size: 11px; padding: 6px 10px; border-radius: 4px; white-space: nowrap; opacity: 0; transform: translateY(5px); pointer-events: none; transition: 0.2s ease; }
+#easterEgg:hover::after { opacity: 1; transform: translateY(0); }
