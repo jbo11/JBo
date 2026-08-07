@@ -508,6 +508,8 @@
 
         if (card) {
 
+          window.TechSound?.open();
+
           openProject(
             card.dataset.project
           );
@@ -524,6 +526,8 @@
 
   function closeModal() {
 
+    window.TechSound?.close();
+    
     modal?.close();
 
     document.body
@@ -852,4 +856,90 @@
     }
   );
 
+// =========================================
+// SOUNDS
+// =========================================
+
+  // NAVIGATION SOUNDS
+  document
+    .querySelectorAll(
+      "a, button, .project-card"
+    )
+    .forEach((element) => {
+
+      element.addEventListener(
+        "mouseenter",
+        () => {
+          window.TechSound?.hover();
+        }
+      );
+
+      element.addEventListener(
+        "click",
+        () => {
+          window.TechSound?.click();
+        }
+      );
+
+  });
+
+  // TECH PROFILE STARTUP SOUNDS
+  window.addEventListener(
+    "load",
+    () => {
+
+      setTimeout(
+        () => {
+          window.TechSound?.boot();
+        },
+        300
+      );
+
+      setTimeout(
+        () =>
+          boot?.classList.add(
+            "boot-complete"
+          ),
+
+        reduceMotion
+          ? 0
+          : 450
+      );
+
+    }
+  );
+
+  // SOUND TOGGLE
+  const soundToggle =
+    document.getElementById(
+      "soundToggle"
+    );
+
+  function updateSoundButton() {
+
+    if (!soundToggle) return;
+
+    soundToggle.textContent =
+      window.TechSound?.isEnabled()
+        ? "SOUND: ON"
+        : "SOUND: OFF";
+
+  }
+
+  soundToggle
+    ?.addEventListener(
+      "click",
+      () => {
+
+        window.TechSound?.toggle();
+
+        updateSoundButton();
+
+      }
+    );
+
+  updateSoundButton();
+
+
 })();
+

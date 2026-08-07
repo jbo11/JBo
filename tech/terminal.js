@@ -71,11 +71,17 @@
       "LOCATION   Los Angeles, CA"
     ],
 
-    coffee: () => [
-      "Brewing...",
-      "☕ caffeine module loaded",
-      "Developer performance: +50%"
-    ],
+    coffee: () => {
+
+      window.TechSound?.coffee();
+
+      return [
+        "Brewing...",
+        "☕ caffeine module loaded",
+        "Developer performance: +50%"
+      ];
+
+    },
 
     konami: () => [
       "Correct.",
@@ -84,6 +90,9 @@
     ],
 
     matrix: () => {
+
+      window.TechSound?.matrix();
+      
       window.dispatchEvent(
         new CustomEvent(
           "tech:matrix"
@@ -96,17 +105,22 @@
     },
 
     exit: () => {
+
+      window.TechSound?.shutdown();
+
       setTimeout(
         () =>
           window.location.assign(
             "../index.html"
           ),
-        350
+        750
       );
 
       return [
-        "Closing developer environment..."
+        "Closing developer environment...",
+        "Shutting down JB_TECH..."
       ];
+
     }
   };
 
@@ -165,11 +179,18 @@
     if (
       commands[command]
     ) {
+
+      window.TechSound?.success();
+
       print(
         commands[command](),
         "terminal-response"
       );
+
     } else {
+
+      window.TechSound?.error();
+
       print(
         [
           `command not found: ${command}`,
@@ -177,6 +198,7 @@
         ],
         "terminal-error"
       );
+
     }
   }
 
@@ -211,5 +233,19 @@
       ""
     ],
     "terminal-response"
+  );
+
+  // Terminal Keyboard Sounds
+  input.addEventListener(
+    "keydown",
+    (event) => {
+
+      if (
+        event.key.length === 1
+      ) {
+        window.TechSound?.key();
+      }
+
+    }
   );
 })();
