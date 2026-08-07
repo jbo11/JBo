@@ -387,5 +387,5 @@ body.dark-header .site-footer{color:var(--dark)}
 
 /* ============= EASTER EGG ============= */
 #easterEgg { position: relative; font-size: 18px; }
-#easterEgg::after { content: "I need 30 lives! Execute the code..."; position: absolute; bottom: 140%; right: 0; background: #1d1d1d; color: #fff; font-size: 11px; padding: 6px 10px; border-radius: 4px; white-space: nowrap; opacity: 0; transform: translateY(5px); pointer-events: none; transition: 0.2s ease; }
+#easterEgg::after { content: "There’s a legendary sequence hidden here..."; position: absolute; bottom: 140%; right: 0; background: #1d1d1d; color: #fff; font-size: 11px; padding: 6px 10px; border-radius: 4px; white-space: nowrap; opacity: 0; transform: translateY(5px); pointer-events: none; transition: 0.2s ease; }
 #easterEgg:hover::after { opacity: 1; transform: translateY(0); }
