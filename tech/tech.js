@@ -552,9 +552,9 @@
     );
 
   // ============================================================
-  // 3D ORBITAL POINTER PARALLAX
-  // Desktop mouse only.
-  // Disabled on touch devices.
+  // 3D ORBITAL
+  // Desktop: pointer parallax
+  // Touch: autonomous orbit handled by CSS
   // ============================================================
 
   const orbital =
@@ -571,52 +571,84 @@
 
   if (
     orbital &&
-    !reduceMotion &&
-    canTilt
+    !reduceMotion
   ) {
-    orbital.addEventListener(
-      "pointermove",
-      (e) => {
-        const rect =
-          orbital
-            .getBoundingClientRect();
 
-        const rx =
-          (
+    // =========================================
+    // DESKTOP — MOUSE PARALLAX
+    // =========================================
+
+    if (canTilt) {
+
+      orbital.classList.add(
+        "orbital-pointer-mode"
+      );
+
+      orbital.addEventListener(
+        "pointermove",
+        (e) => {
+
+          const rect =
+            orbital
+              .getBoundingClientRect();
+
+          const rx =
             (
-              e.clientY -
-              rect.top
-            ) /
-              rect.height -
-            .5
-          ) *
-          -7;
+              (
+                e.clientY -
+                rect.top
+              ) /
+                rect.height -
+              0.5
+            ) * -7;
 
-        const ry =
-          (
+          const ry =
             (
-              e.clientX -
-              rect.left
-            ) /
-              rect.width -
-            .5
-          ) *
-          7;
+              (
+                e.clientX -
+                rect.left
+              ) /
+                rect.width -
+              0.5
+            ) * 7;
 
-        orbital.style.transform =
-          `perspective(1000px)
-           rotateX(${rx}deg)
-           rotateY(${ry}deg)`;
-      }
-    );
+          orbital.style.transform =
+            `
+              perspective(1000px)
+              rotateX(${rx}deg)
+              rotateY(${ry}deg)
+            `;
+        }
+      );
 
-    orbital.addEventListener(
-      "pointerleave",
-      () => {
-        orbital.style.transform =
-          "";
-      }
-    );
+      orbital.addEventListener(
+        "pointerleave",
+        () => {
+
+          orbital.style.transform =
+            `
+              perspective(1000px)
+              rotateX(0deg)
+              rotateY(0deg)
+            `;
+
+        }
+      );
+
+    }
+
+    // =========================================
+    // TOUCH — AUTOMATIC ORBIT
+    // =========================================
+
+    else {
+
+      orbital.classList.add(
+        "orbital-auto-mode"
+      );
+
+    }
+
   }
 
   // ============================================================
