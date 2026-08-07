@@ -455,4 +455,5 @@ musicToggle.addEventListener("click", async (e) => {
 
     window.TechProfileActivation?.start?.();
   });
+
 })();
