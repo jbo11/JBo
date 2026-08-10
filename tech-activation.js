@@ -157,7 +157,7 @@
 
       animation:
         techLoad
-        1.75s
+        5s
         cubic-bezier(.45,0,.15,1)
         forwards;
     }
@@ -454,7 +454,7 @@
       redirect,
       reduceMotion
         ? 650
-        : 2050
+        : 5000
     );
   }
 
