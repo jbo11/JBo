@@ -926,4 +926,78 @@ musicToggle.addEventListener("click", async (e) => {
     window.TechProfileActivation?.start?.();
   });
 
+  // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+  // EASTER EGG — LONG HOVER MESSAGE
+  // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+  (() => {
+    const easterEgg =
+      document.getElementById("easterEgg");
+
+    const tooltip =
+      easterEgg?.querySelector(
+        ".easter-tooltip"
+      );
+
+    if (!easterEgg || !tooltip) return;
+
+    const normalMessage =
+      "There’s a legendary sequence hidden here...";
+
+    const secretMessage = `
+      <strong>U</strong>nder
+      <strong>U</strong>nknown
+      <strong>D</strong>epths,
+      <strong>D</strong>ark
+      <strong>L</strong>egends
+      <strong>R</strong>emain,
+      <strong>L</strong>ost
+      <strong>R</strong>elics
+      <strong>B</strong>ring
+      <strong>A</strong>dventure
+    `;
+
+    let hoverTimer = null;
+
+    easterEgg.addEventListener(
+      "mouseenter",
+      () => {
+
+        clearTimeout(hoverTimer);
+
+        tooltip.textContent =
+          normalMessage;
+
+        hoverTimer =
+          setTimeout(() => {
+
+            tooltip.innerHTML =
+              secretMessage;
+
+            easterEgg.classList.add(
+              "secret-revealed"
+            );
+
+          }, 6000);
+
+      }
+    );
+
+    easterEgg.addEventListener(
+      "mouseleave",
+      () => {
+
+        clearTimeout(hoverTimer);
+
+        tooltip.textContent =
+          normalMessage;
+
+        easterEgg.classList.remove(
+          "secret-revealed"
+        );
+
+      }
+    );
+  })();
+
 })();

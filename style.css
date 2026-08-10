@@ -381,13 +381,13 @@ body.dark-header .site-footer{color:var(--dark)}
 
 /* ============= EASTER EGG ============= */
 #easterEgg { position: relative; font-size: 18px; }
-#easterEgg::after { content: "There’s a legendary sequence hidden here..."; position: absolute; bottom: 140%; right: 0; background: #1d1d1d; color: #fff; font-size: 11px; padding: 6px 10px; border-radius: 4px; white-space: nowrap; opacity: 0; transform: translateY(5px); pointer-events: none; transition: 0.2s ease; }
-#easterEgg:hover::after { opacity: 1; transform: translateY(0); }
+.easter-tooltip { position: absolute; bottom: 140%; right: 0; width: 290px; padding: 8px 12px; background: #1d1d1d; color: #fff; font-size: 11px; font-weight: 400; line-height: 1.5; text-align: left; border-radius: 4px; opacity: 0; visibility: hidden; transform: translateY(5px); pointer-events: none; transition: opacity 0.2s ease, transform 0.2s ease; z-index: 999999; }
+#easterEgg:hover .easter-tooltip { opacity: 1; visibility: visible; transform: translateY(0); }
+#easterEgg.secret-revealed .easter-tooltip { color: var(--accent); }
+#easterEgg.secret-revealed .easter-tooltip strong { font-weight: 900; font-size: 12px; }
 
 /* ========================================================================== 
    MOBILE POLISH — STANDARD PROFILE
-   Keeps the desktop full-page experience intact while making phones scroll
-   naturally and removing hover/nested-scroll assumptions.
    ========================================================================== */
 @media (max-width: 900px) {
   html,

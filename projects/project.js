@@ -1,94 +1,780 @@
-const fp = document.getElementById("fullpage-works");
+(() => {
 
-let current = 0;
-let isAnimating = false;
-
-function getSections() {
-  return document.querySelectorAll(".page");
-}
-
-function setActive(idx) {
-  const sections = getSections();
+  const fp =
+    document.getElementById(
+      "fullpage-works"
+    );
 
   if (!fp) return;
-  if (idx < 0 || idx >= sections.length) return;
 
-  current = idx;
 
-  fp.style.transform = `translateY(-${idx * 100}vh)`;
+  const sections =
+    Array.from(
+      fp.querySelectorAll(
+        ".page"
+      )
+    );
 
-  sections.forEach((s, i) => {
-    s.classList.toggle("is-active", i === idx);
-  });
-}
 
-// SCROLL
-window.addEventListener("wheel", (e) => {
-  if (isAnimating) return;
-
-  // ✅ Allow scrolling/clicking inside links or interactive elements
-  if (e.target.closest("a, button, input, textarea")) return;
-
-  if (Math.abs(e.deltaY) < 30) return;
-
-  e.preventDefault();
-  isAnimating = true;
-
-  const sections = getSections();
-
-  if (e.deltaY > 0) {
-    setActive(Math.min(current + 1, sections.length - 1));
-  } else {
-    setActive(Math.max(current - 1, 0));
+  if (!sections.length) {
+    return;
   }
 
-  setTimeout(() => {
-    isAnimating = false;
-  }, 900);
-}, { passive: false });
 
-// ARROWS
-document.querySelectorAll(".arrow-down").forEach(btn => {
-  btn.addEventListener("click", () => {
-    const sections = getSections();
-    setActive(Math.min(current + 1, sections.length - 1));
-  });
-});
+  const desktopQuery =
+    window.matchMedia(
+      "(min-width: 901px)"
+    );
 
-document.querySelectorAll(".arrow-up").forEach(btn => {
-  btn.addEventListener("click", () => {
-    setActive(Math.max(current - 1, 0));
-  });
-});
 
-// INIT
-setActive(0);
+  const reduceMotion =
+    window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
 
-// For mobile scrolling
 
-let startY = 0;
+  let current = 0;
 
-window.addEventListener("touchstart", (e) => {
-  startY = e.touches[0].clientY;
-});
+  let isAnimating =
+    false;
 
-window.addEventListener("touchend", (e) => {
-  if (isAnimating) return;
+  let wheelTimer =
+    null;
 
-  // ✅ Allow taps on links
-  if (e.target.closest("a, button")) return;
+  let touchStartY =
+    null;
 
-  const endY = e.changedTouches[0].clientY;
-  const diff = startY - endY;
 
-  if (Math.abs(diff) < 50) return;
+  // ============================================================
+  // HELPERS
+  // ============================================================
 
-  const sections = getSections();
-
-  if (diff > 0) {
-    setActive(Math.min(current + 1, sections.length - 1));
-  } else {
-    setActive(Math.max(current - 1, 0));
+  function isDesktop() {
+    return desktopQuery.matches;
   }
-});
 
+
+  function clampIndex(index) {
+
+    return Math.max(
+      0,
+      Math.min(
+        index,
+        sections.length - 1
+      )
+    );
+
+  }
+
+
+  function updateClasses() {
+
+    sections.forEach(
+      (section, index) => {
+
+        section.classList.toggle(
+          "is-active",
+          index === current
+        );
+
+      }
+    );
+
+  }
+
+
+  // ============================================================
+  // SET ACTIVE PAGE
+  // ============================================================
+
+  function setActive(
+    index,
+    options = {}
+  ) {
+
+    const {
+      scrollMobile = true
+    } = options;
+
+
+    current =
+      clampIndex(index);
+
+
+    updateClasses();
+
+
+    // ========================================================
+    // DESKTOP
+    // ========================================================
+
+    if (isDesktop()) {
+
+      const offset =
+        current *
+        window.innerHeight;
+
+
+      fp.style.transform =
+        `translate3d(
+          0,
+          -${offset}px,
+          0
+        )`;
+
+      return;
+    }
+
+
+    // ========================================================
+    // MOBILE
+    // ========================================================
+
+    fp.style.transform =
+      "none";
+
+
+    if (scrollMobile) {
+
+      sections[current]
+        .scrollIntoView({
+
+          behavior:
+            reduceMotion
+              ? "auto"
+              : "smooth",
+
+          block:
+            "start"
+
+        });
+
+    }
+
+  }
+
+
+  // ============================================================
+  // DESKTOP WHEEL
+  // ============================================================
+
+  window.addEventListener(
+    "wheel",
+    (event) => {
+
+      if (!isDesktop()) {
+        return;
+      }
+
+
+      /*
+        Don't intercept typing /
+        form controls.
+      */
+
+      if (
+        event.target.closest(
+          "input, textarea, select, [contenteditable='true']"
+        )
+      ) {
+        return;
+      }
+
+
+      /*
+        Important:
+
+        We DO NOT exclude <a>
+        elements anymore.
+
+        Your old code did this:
+
+        if (e.target.closest("a")) return;
+
+        which meant desktop scrolling
+        stopped whenever the cursor
+        was over a project card.
+      */
+
+
+      if (
+        Math.abs(
+          event.deltaY
+        ) < 35
+      ) {
+        return;
+      }
+
+
+      event.preventDefault();
+
+
+      if (isAnimating) {
+        return;
+      }
+
+
+      isAnimating =
+        true;
+
+
+      if (
+        event.deltaY > 0
+      ) {
+
+        setActive(
+          current + 1
+        );
+
+      } else {
+
+        setActive(
+          current - 1
+        );
+
+      }
+
+
+      clearTimeout(
+        wheelTimer
+      );
+
+
+      wheelTimer =
+        setTimeout(
+          () => {
+
+            isAnimating =
+              false;
+
+          },
+          850
+        );
+
+    },
+    {
+      passive: false
+    }
+  );
+
+
+  // ============================================================
+  // DESKTOP KEYBOARD
+  // ============================================================
+
+  document.addEventListener(
+    "keydown",
+    (event) => {
+
+      if (!isDesktop()) {
+        return;
+      }
+
+
+      const tag =
+        event.target
+          ?.tagName
+          ?.toLowerCase();
+
+
+      if (
+        tag === "input" ||
+        tag === "textarea" ||
+        tag === "select"
+      ) {
+        return;
+      }
+
+
+      switch (
+        event.key
+      ) {
+
+        case "ArrowDown":
+        case "PageDown":
+        case " ":
+
+          event.preventDefault();
+
+          setActive(
+            current + 1
+          );
+
+          break;
+
+
+        case "ArrowUp":
+        case "PageUp":
+
+          event.preventDefault();
+
+          setActive(
+            current - 1
+          );
+
+          break;
+
+
+        case "Home":
+
+          event.preventDefault();
+
+          setActive(0);
+
+          break;
+
+
+        case "End":
+
+          event.preventDefault();
+
+          setActive(
+            sections.length - 1
+          );
+
+          break;
+
+      }
+
+    }
+  );
+
+
+  // ============================================================
+  // GALLERY ARROWS
+  // ============================================================
+
+  document
+    .querySelectorAll(
+      ".arrow-down"
+    )
+    .forEach(
+      (button) => {
+
+        /*
+          Your markup currently uses
+          <div>. Give it button-like
+          accessibility automatically.
+        */
+
+        if (
+          button.tagName !==
+          "BUTTON"
+        ) {
+
+          button.setAttribute(
+            "role",
+            "button"
+          );
+
+          button.setAttribute(
+            "tabindex",
+            "0"
+          );
+
+        }
+
+
+        button.setAttribute(
+          "aria-label",
+          "Next project section"
+        );
+
+
+        const activate = () => {
+
+          setActive(
+            current + 1
+          );
+
+        };
+
+
+        button.addEventListener(
+          "click",
+          activate
+        );
+
+
+        button.addEventListener(
+          "keydown",
+          (event) => {
+
+            if (
+              event.key ===
+                "Enter" ||
+              event.key ===
+                " "
+            ) {
+
+              event.preventDefault();
+
+              activate();
+
+            }
+
+          }
+        );
+
+      }
+    );
+
+
+  document
+    .querySelectorAll(
+      ".arrow-up"
+    )
+    .forEach(
+      (button) => {
+
+        if (
+          button.tagName !==
+          "BUTTON"
+        ) {
+
+          button.setAttribute(
+            "role",
+            "button"
+          );
+
+          button.setAttribute(
+            "tabindex",
+            "0"
+          );
+
+        }
+
+
+        button.setAttribute(
+          "aria-label",
+          "Previous project section"
+        );
+
+
+        const activate = () => {
+
+          setActive(
+            current - 1
+          );
+
+        };
+
+
+        button.addEventListener(
+          "click",
+          activate
+        );
+
+
+        button.addEventListener(
+          "keydown",
+          (event) => {
+
+            if (
+              event.key ===
+                "Enter" ||
+              event.key ===
+                " "
+            ) {
+
+              event.preventDefault();
+
+              activate();
+
+            }
+
+          }
+        );
+
+      }
+    );
+
+
+  // ============================================================
+  // TOUCH SWIPE
+  //
+  // Only used when viewport is
+  // desktop-width.
+  //
+  // Mobile gets natural scrolling.
+  // ============================================================
+
+  window.addEventListener(
+    "touchstart",
+    (event) => {
+
+      if (!isDesktop()) {
+        return;
+      }
+
+
+      touchStartY =
+        event.touches[0]
+          .clientY;
+
+    },
+    {
+      passive: true
+    }
+  );
+
+
+  window.addEventListener(
+    "touchend",
+    (event) => {
+
+      if (
+        !isDesktop() ||
+        touchStartY === null
+      ) {
+        return;
+      }
+
+
+      const touchEndY =
+        event.changedTouches[0]
+          .clientY;
+
+
+      const difference =
+        touchStartY -
+        touchEndY;
+
+
+      touchStartY =
+        null;
+
+
+      if (
+        Math.abs(
+          difference
+        ) < 60
+      ) {
+        return;
+      }
+
+
+      if (
+        difference > 0
+      ) {
+
+        setActive(
+          current + 1
+        );
+
+      } else {
+
+        setActive(
+          current - 1
+        );
+
+      }
+
+    },
+    {
+      passive: true
+    }
+  );
+
+
+  // ============================================================
+  // MOBILE SCROLL TRACKING
+  //
+  // Keeps "current" accurate when
+  // the visitor manually scrolls.
+  // ============================================================
+
+  if (
+    "IntersectionObserver"
+    in window
+  ) {
+
+    const observer =
+      new IntersectionObserver(
+        (entries) => {
+
+          if (isDesktop()) {
+            return;
+          }
+
+
+          entries.forEach(
+            (entry) => {
+
+              if (
+                !entry.isIntersecting
+              ) {
+                return;
+              }
+
+
+              const index =
+                sections.indexOf(
+                  entry.target
+                );
+
+
+              if (
+                index !== -1
+              ) {
+
+                current =
+                  index;
+
+                updateClasses();
+
+              }
+
+            }
+          );
+
+        },
+        {
+          rootMargin:
+            "-35% 0px -35% 0px",
+
+          threshold:
+            0
+        }
+      );
+
+
+    sections.forEach(
+      (section) => {
+
+        observer.observe(
+          section
+        );
+
+      }
+    );
+
+  }
+
+
+  // ============================================================
+  // RESPONSIVE MODE SWITCH
+  // ============================================================
+
+  function syncMode() {
+
+    isAnimating =
+      false;
+
+
+    clearTimeout(
+      wheelTimer
+    );
+
+
+    if (
+      isDesktop()
+    ) {
+
+      /*
+        Enter desktop full-page
+        mode.
+      */
+
+      setActive(
+        current,
+        {
+          scrollMobile: false
+        }
+      );
+
+    } else {
+
+      /*
+        Remove the transform
+        completely.
+
+        This is what makes mobile
+        a normal scrolling page.
+      */
+
+      fp.style.transform =
+        "none";
+
+    }
+
+  }
+
+
+  if (
+    desktopQuery
+      .addEventListener
+  ) {
+
+    desktopQuery
+      .addEventListener(
+        "change",
+        syncMode
+      );
+
+  } else {
+
+    desktopQuery
+      .addListener(
+        syncMode
+      );
+
+  }
+
+
+  // ============================================================
+  // RESIZE
+  // ============================================================
+
+  let resizeTimer;
+
+
+  window.addEventListener(
+    "resize",
+    () => {
+
+      clearTimeout(
+        resizeTimer
+      );
+
+
+      resizeTimer =
+        setTimeout(
+          () => {
+
+            if (
+              isDesktop()
+            ) {
+
+              setActive(
+                current,
+                {
+                  scrollMobile:
+                    false
+                }
+              );
+
+            } else {
+
+              fp.style.transform =
+                "none";
+
+            }
+
+          },
+          80
+        );
+
+    }
+  );
+
+
+  // ============================================================
+  // INITIALIZE
+  // ============================================================
+
+  updateClasses();
+
+  syncMode();
+
+})();
