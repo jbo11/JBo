@@ -927,22 +927,32 @@ musicToggle.addEventListener("click", async (e) => {
   });
 
   // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-  // EASTER EGG — LONG HOVER MESSAGE
+  // EASTER EGG — CLICK TO REVEAL SECRET
   // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
   (() => {
-    const easterEgg =
-      document.getElementById("easterEgg");
 
-    const tooltip =
-      easterEgg?.querySelector(
-        ".easter-tooltip"
+    const easterEgg =
+      document.getElementById(
+        "easterEgg"
       );
 
-    if (!easterEgg || !tooltip) return;
+    const tooltip =
+      document.getElementById(
+        "easterTooltip"
+      );
+
+    if (
+      !easterEgg ||
+      !tooltip
+    ) {
+      return;
+    }
+
 
     const normalMessage =
       "There’s a legendary sequence hidden here...";
+
 
     const secretMessage = `
       <strong>U</strong>nder
@@ -950,54 +960,95 @@ musicToggle.addEventListener("click", async (e) => {
       <strong>D</strong>epths,
       <strong>D</strong>ark
       <strong>L</strong>egends
-      <strong>R</strong>emain,
+      <strong>R</strong>emain;
       <strong>L</strong>ost
       <strong>R</strong>elics
       <strong>B</strong>ring
       <strong>A</strong>dventure
     `;
 
-    let hoverTimer = null;
+
+    let secretTimer = null;
+
 
     easterEgg.addEventListener(
-      "mouseenter",
-      () => {
+      "click",
+      (event) => {
 
-        clearTimeout(hoverTimer);
+        event.preventDefault();
+
+        clearTimeout(
+          secretTimer
+        );
+
+
+        // Reset
+        easterEgg.classList.remove(
+          "secret-revealed"
+        );
 
         tooltip.textContent =
           normalMessage;
 
-        hoverTimer =
-          setTimeout(() => {
 
-            tooltip.innerHTML =
-              secretMessage;
+        // Play Contra sound
 
-            easterEgg.classList.add(
-              "secret-revealed"
-            );
+        const audio =
+          new Audio(
+            "public/contra.wav"
+          );
 
-          }, 6000);
+        audio.volume = 0.6;
+
+        audio.play().catch(() => {});
+
+
+        // Reveal clue after 3 seconds
+
+        secretTimer =
+          setTimeout(
+            () => {
+
+              tooltip.innerHTML =
+                secretMessage;
+
+              easterEgg.classList.add(
+                "secret-revealed"
+              );
+
+            },
+            5500
+          );
 
       }
     );
+
+
+    // Reset after leaving
+    // once secret was revealed
 
     easterEgg.addEventListener(
       "mouseleave",
       () => {
 
-        clearTimeout(hoverTimer);
+        if (
+          easterEgg.classList.contains(
+            "secret-revealed"
+          )
+        ) {
 
-        tooltip.textContent =
-          normalMessage;
+          easterEgg.classList.remove(
+            "secret-revealed"
+          );
 
-        easterEgg.classList.remove(
-          "secret-revealed"
-        );
+          tooltip.textContent =
+            normalMessage;
+
+        }
 
       }
     );
+
   })();
 
 })();
