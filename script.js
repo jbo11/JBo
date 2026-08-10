@@ -995,7 +995,7 @@ musicToggle.addEventListener("click", async (e) => {
 
         const audio =
           new Audio(
-            "public/contra.wav"
+            "public/sounds/contra.mp3"
           );
 
         audio.volume = 0.6;
@@ -1050,5 +1050,983 @@ musicToggle.addEventListener("click", async (e) => {
     );
 
   })();
+
+})();
+
+// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+// PARTNER COIN BOX EASTER EGG
+// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+(() => {
+
+  // ==========================================================
+  // CONFIGURATION
+  // ==========================================================
+
+  const REQUIRED_PARTNER_CLICKS = 5;
+
+  const MAX_COINS = 10;
+
+  const USED_BLOCK_DURATION = 5000;
+
+  const COIN_FRAME_SPEED = 65;
+
+
+  // ==========================================================
+  // FILE PATHS
+  // ==========================================================
+
+  const COINBOX_PATH =
+    "public/partners/coinBox";
+
+
+  const BOX_ACTIVE =
+    `${COINBOX_PATH}/box1.png`;
+
+
+  const BOX_USED =
+    `${COINBOX_PATH}/box2.png`;
+
+
+  const COIN_FRAMES = [
+    `${COINBOX_PATH}/coin-1.png`,
+    `${COINBOX_PATH}/coin-2.png`,
+    `${COINBOX_PATH}/coin-3.png`,
+    `${COINBOX_PATH}/coin-4.png`,
+    `${COINBOX_PATH}/coin-5.png`,
+    `${COINBOX_PATH}/coin-6.png`
+  ];
+
+
+  // ==========================================================
+  // FIND PARTNERS
+  // ==========================================================
+
+  const partners =
+    document.querySelectorAll(
+      ".partner"
+    );
+
+
+  if (!partners.length) {
+    return;
+  }
+
+
+  // ==========================================================
+  // PRELOAD GAME IMAGES
+  // Prevents first-time animation flicker.
+  // ==========================================================
+
+  const preloadAssets = [
+    BOX_ACTIVE,
+    BOX_USED,
+    ...COIN_FRAMES
+  ];
+
+
+  preloadAssets.forEach(
+    (src) => {
+
+      const img =
+        new Image();
+
+      img.src = src;
+
+    }
+  );
+
+
+  // ==========================================================
+  // SHARED RETRO SOUND ENGINE
+  // ==========================================================
+
+  let audioContext = null;
+
+
+  function getAudioContext() {
+
+    try {
+
+      if (!audioContext) {
+
+        const AudioContext =
+          window.AudioContext ||
+          window.webkitAudioContext;
+
+
+        if (!AudioContext) {
+          return null;
+        }
+
+
+        audioContext =
+          new AudioContext();
+
+      }
+
+
+      if (
+        audioContext.state ===
+        "suspended"
+      ) {
+
+        audioContext.resume();
+
+      }
+
+
+      return audioContext;
+
+    } catch (error) {
+
+      return null;
+
+    }
+
+  }
+
+
+  // ==========================================================
+  // COIN SOUND
+  // ==========================================================
+
+  const coinSound =
+    new Audio(
+      "public/sounds/coin-sound.mp3"
+    );
+
+  coinSound.preload = "auto";
+
+  coinSound.volume = 0.15;
+
+
+  function playCoinSound() {
+
+    try {
+
+      // Restart sound from beginning
+      // every time the block is clicked.
+
+      coinSound.currentTime = 0;
+
+      coinSound
+        .play()
+        .catch(() => {});
+
+    } catch (error) {
+
+      // Sound is optional.
+      // Game continues even if audio fails.
+
+    }
+
+  }
+
+
+  // ==========================================================
+  // QUESTION BLOCK ACTIVATION SOUND
+  // ==========================================================
+
+  function playBlockRevealSound() {
+
+    const ctx =
+      getAudioContext();
+
+
+    if (!ctx) {
+      return;
+    }
+
+
+    try {
+
+      const oscillator =
+        ctx.createOscillator();
+
+
+      const gain =
+        ctx.createGain();
+
+
+      oscillator.type =
+        "square";
+
+
+      oscillator.connect(
+        gain
+      );
+
+
+      gain.connect(
+        ctx.destination
+      );
+
+
+      const now =
+        ctx.currentTime;
+
+
+      oscillator.frequency
+        .setValueAtTime(
+          330,
+          now
+        );
+
+
+      oscillator.frequency
+        .setValueAtTime(
+          440,
+          now + 0.07
+        );
+
+
+      oscillator.frequency
+        .setValueAtTime(
+          660,
+          now + 0.14
+        );
+
+
+      gain.gain
+        .setValueAtTime(
+          0.02,
+          now
+        );
+
+
+      gain.gain
+        .exponentialRampToValueAtTime(
+          0.0001,
+          now + 0.23
+        );
+
+
+      oscillator.start(
+        now
+      );
+
+
+      oscillator.stop(
+        now + 0.24
+      );
+
+    } catch (error) {
+
+      // Optional sound.
+
+    }
+
+  }
+
+
+  // ==========================================================
+  // EMPTY BLOCK SOUND
+  // ==========================================================
+
+  function playEmptyBlockSound() {
+
+    const ctx =
+      getAudioContext();
+
+
+    if (!ctx) {
+      return;
+    }
+
+
+    try {
+
+      const oscillator =
+        ctx.createOscillator();
+
+
+      const gain =
+        ctx.createGain();
+
+
+      oscillator.type =
+        "square";
+
+
+      oscillator.connect(
+        gain
+      );
+
+
+      gain.connect(
+        ctx.destination
+      );
+
+
+      const now =
+        ctx.currentTime;
+
+
+      oscillator.frequency
+        .setValueAtTime(
+          260,
+          now
+        );
+
+
+      oscillator.frequency
+        .setValueAtTime(
+          190,
+          now + 0.08
+        );
+
+
+      gain.gain
+        .setValueAtTime(
+          0.018,
+          now
+        );
+
+
+      gain.gain
+        .exponentialRampToValueAtTime(
+          0.0001,
+          now + 0.18
+        );
+
+
+      oscillator.start(
+        now
+      );
+
+
+      oscillator.stop(
+        now + 0.19
+      );
+
+    } catch (error) {
+
+      // Optional sound.
+
+    }
+
+  }
+
+
+  // ==========================================================
+  // INITIALIZE EACH PARTNER INDIVIDUALLY
+  // ==========================================================
+
+  partners.forEach(
+    (partner) => {
+
+      // Prevent accidental duplicate initialization.
+
+      if (
+        partner.dataset.coinBoxInitialized ===
+        "true"
+      ) {
+        return;
+      }
+
+
+      partner.dataset.coinBoxInitialized =
+        "true";
+
+
+      // ------------------------------------------------------
+      // ORIGINAL PARTNER LOGO
+      // ------------------------------------------------------
+
+      const partnerLogo =
+        partner.querySelector(
+          ":scope > img"
+        );
+
+
+      if (!partnerLogo) {
+        return;
+      }
+
+
+      partnerLogo.classList.add(
+        "partner-logo"
+      );
+
+
+      const partnerName =
+        partnerLogo.alt ||
+        "Partner";
+
+
+      // ------------------------------------------------------
+      // STATE
+      // ------------------------------------------------------
+
+      let partnerClickCount = 0;
+
+      let coinCount = 0;
+
+      let gameActive = false;
+
+      let blockUsed = false;
+
+      let gameBox = null;
+
+      let usedBlockTimer = null;
+
+
+      // ======================================================
+      // ACCESSIBILITY
+      // ======================================================
+
+      partner.setAttribute(
+        "tabindex",
+        "0"
+      );
+
+
+      partner.setAttribute(
+        "role",
+        "button"
+      );
+
+
+      partner.setAttribute(
+        "aria-label",
+        partnerName
+      );
+
+
+      // ======================================================
+      // NORMAL PARTNER CLICK
+      // Must click logo 5 times.
+      // ======================================================
+
+      partner.addEventListener(
+        "click",
+        (event) => {
+
+          // If game is active,
+          // question block handles clicks.
+
+          if (gameActive) {
+            return;
+          }
+
+
+          partnerClickCount++;
+
+
+          if (
+            partnerClickCount >=
+            REQUIRED_PARTNER_CLICKS
+          ) {
+
+            activateQuestionBlock();
+
+          }
+
+        }
+      );
+
+
+      // ======================================================
+      // KEYBOARD SUPPORT
+      // ======================================================
+
+      partner.addEventListener(
+        "keydown",
+        (event) => {
+
+          if (
+            event.key !== "Enter" &&
+            event.key !== " "
+          ) {
+            return;
+          }
+
+
+          event.preventDefault();
+
+
+          if (!gameActive) {
+
+            partnerClickCount++;
+
+
+            if (
+              partnerClickCount >=
+              REQUIRED_PARTNER_CLICKS
+            ) {
+
+              activateQuestionBlock();
+
+            }
+
+
+            return;
+
+          }
+
+
+          if (
+            gameActive &&
+            !blockUsed
+          ) {
+
+            releaseCoin();
+
+          }
+
+        }
+      );
+
+
+      // ======================================================
+      // ACTIVATE QUESTION BLOCK
+      // ======================================================
+
+      function activateQuestionBlock() {
+
+        if (gameActive) {
+          return;
+        }
+
+
+        gameActive = true;
+
+        blockUsed = false;
+
+        coinCount = 0;
+
+
+        partner.classList.add(
+          "partner-game-active"
+        );
+
+
+        partner.classList.remove(
+          "partner-block-used"
+        );
+
+
+        partner.setAttribute(
+          "aria-label",
+          `${partnerName} hidden question block`
+        );
+
+
+        // ----------------------------------------------------
+        // CREATE QUESTION BLOCK
+        // ----------------------------------------------------
+
+        gameBox =
+          document.createElement(
+            "img"
+          );
+
+
+        gameBox.src =
+          BOX_ACTIVE;
+
+
+        gameBox.alt =
+          "Question block";
+
+
+        gameBox.className =
+          "partner-game-box";
+
+
+        gameBox.draggable =
+          false;
+
+
+        gameBox.setAttribute(
+          "aria-hidden",
+          "true"
+        );
+
+
+        partner.appendChild(
+          gameBox
+        );
+
+
+        playBlockRevealSound();
+
+
+        // ----------------------------------------------------
+        // BLOCK CLICK
+        // ----------------------------------------------------
+
+        gameBox.addEventListener(
+          "click",
+          (event) => {
+
+            /*
+            Critical:
+            prevents click from bubbling
+            back into .partner and changing
+            the original 5-click counter.
+            */
+
+            event.preventDefault();
+
+            event.stopPropagation();
+
+
+            if (
+              blockUsed ||
+              !gameActive
+            ) {
+              return;
+            }
+
+
+            releaseCoin();
+
+          }
+        );
+
+      }
+
+
+      // ======================================================
+      // RELEASE COIN
+      // ======================================================
+
+      function releaseCoin() {
+
+        if (
+          !gameActive ||
+          blockUsed ||
+          !gameBox ||
+          coinCount >= MAX_COINS
+        ) {
+          return;
+        }
+
+
+        coinCount++;
+
+
+        // ----------------------------------------------------
+        // BLOCK BUMP
+        // ----------------------------------------------------
+
+        gameBox.classList.remove(
+          "bump"
+        );
+
+
+        /*
+        Force reflow so CSS animation
+        restarts on every click.
+        */
+
+        void gameBox.offsetWidth;
+
+
+        gameBox.classList.add(
+          "bump"
+        );
+
+
+        // ----------------------------------------------------
+        // CREATE ANIMATED ROTATING COIN
+        // ----------------------------------------------------
+
+        createAnimatedCoin();
+
+
+        // ----------------------------------------------------
+        // SOUND
+        // ----------------------------------------------------
+
+        playCoinSound();
+
+
+        // ----------------------------------------------------
+        // 10TH COIN
+        // ----------------------------------------------------
+
+        if (
+          coinCount >=
+          MAX_COINS
+        ) {
+
+          /*
+          Lock immediately so rapid clicks
+          cannot generate coin #11.
+          */
+
+          blockUsed = true;
+
+
+          setTimeout(
+            () => {
+
+              switchToUsedBlock();
+
+            },
+            180
+          );
+
+        }
+
+      }
+
+
+      // ======================================================
+      // CREATE ROTATING COIN
+      // ======================================================
+
+      function createAnimatedCoin() {
+
+        const coin =
+          document.createElement(
+            "img"
+          );
+
+
+        coin.className =
+          "partner-coin";
+
+
+        coin.src =
+          COIN_FRAMES[0];
+
+
+        coin.alt = "";
+
+
+        coin.draggable =
+          false;
+
+
+        coin.setAttribute(
+          "aria-hidden",
+          "true"
+        );
+
+
+        partner.appendChild(
+          coin
+        );
+
+
+        // ----------------------------------------------------
+        // ROTATING FRAME ANIMATION
+        // ----------------------------------------------------
+
+        let frameIndex = 0;
+
+
+        const frameTimer =
+          setInterval(
+            () => {
+
+              frameIndex =
+                (
+                  frameIndex + 1
+                ) %
+                COIN_FRAMES.length;
+
+
+              coin.src =
+                COIN_FRAMES[
+                  frameIndex
+                ];
+
+            },
+            COIN_FRAME_SPEED
+          );
+
+
+        // ----------------------------------------------------
+        // REMOVE AFTER COIN FINISHES RISING
+        // ----------------------------------------------------
+
+        const cleanupCoin =
+          () => {
+
+            clearInterval(
+              frameTimer
+            );
+
+
+            coin.remove();
+
+          };
+
+
+        coin.addEventListener(
+          "animationend",
+          cleanupCoin,
+          {
+            once: true
+          }
+        );
+
+
+        /*
+        Fallback in case animationend
+        doesn't fire for any reason.
+        */
+
+        setTimeout(
+          () => {
+
+            if (
+              coin.isConnected
+            ) {
+
+              cleanupCoin();
+
+            }
+
+          },
+          1200
+        );
+
+      }
+
+
+      // ======================================================
+      // SWITCH TO BROWN / EMPTY BLOCK
+      // ======================================================
+
+      function switchToUsedBlock() {
+
+        if (
+          !gameActive ||
+          !gameBox
+        ) {
+          return;
+        }
+
+
+        blockUsed = true;
+
+
+        partner.classList.add(
+          "partner-block-used"
+        );
+
+
+        gameBox.classList.remove(
+          "bump"
+        );
+
+
+        gameBox.src =
+          BOX_USED;
+
+
+        gameBox.alt =
+          "Used block";
+
+
+        gameBox.style.cursor =
+          "default";
+
+
+        partner.setAttribute(
+          "aria-label",
+          `${partnerName} used coin block`
+        );
+
+
+        playEmptyBlockSound();
+
+
+        // ----------------------------------------------------
+        // USED BLOCK STAYS FOR 5 SECONDS
+        // ----------------------------------------------------
+
+        clearTimeout(
+          usedBlockTimer
+        );
+
+
+        usedBlockTimer =
+          setTimeout(
+            () => {
+
+              resetPartner();
+
+            },
+            USED_BLOCK_DURATION
+          );
+
+      }
+
+
+      // ======================================================
+      // RESET BACK TO ORIGINAL PARTNER LOGO
+      // ======================================================
+
+      function resetPartner() {
+
+        clearTimeout(
+          usedBlockTimer
+        );
+
+
+        usedBlockTimer = null;
+
+
+        // Remove any coins still visible.
+
+        partner
+          .querySelectorAll(
+            ".partner-coin"
+          )
+          .forEach(
+            (coin) => {
+
+              coin.remove();
+
+            }
+          );
+
+
+        // Remove question / used block.
+
+        if (gameBox) {
+
+          gameBox.remove();
+
+          gameBox = null;
+
+        }
+
+
+        // Remove game state classes.
+
+        partner.classList.remove(
+          "partner-game-active",
+          "partner-block-used"
+        );
+
+
+        // Restore original state.
+
+        partnerClickCount = 0;
+
+        coinCount = 0;
+
+        gameActive = false;
+
+        blockUsed = false;
+
+
+        partner.setAttribute(
+          "aria-label",
+          partnerName
+        );
+
+      }
+
+    }
+  );
 
 })();
