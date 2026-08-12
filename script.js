@@ -925,131 +925,139 @@ musicToggle.addEventListener("click", async (e) => {
 
     window.TechProfileActivation?.start?.();
   });
+})();
 
   // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
   // EASTER EGG — CLICK TO REVEAL SECRET
   // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
-  (() => {
+(() => {
+  const easterEgg =
+    document.getElementById("easterEgg");
 
-    const easterEgg =
-      document.getElementById(
-        "easterEgg"
-      );
+  const tooltip =
+    document.getElementById("easterTooltip");
 
-    const tooltip =
-      document.getElementById(
-        "easterTooltip"
-      );
+  if (!easterEgg || !tooltip) {
+    return;
+  }
 
-    if (
-      !easterEgg ||
-      !tooltip
-    ) {
-      return;
+  const normalMessage =
+    "There’s a legendary sequence hidden here...";
+
+  const secretMessage = `
+    <strong>U</strong>nder
+    <strong>U</strong>nknown
+    <strong>D</strong>epths,
+    <strong>D</strong>ark
+    <strong>L</strong>egends
+    <strong>R</strong>emain;
+    <strong>L</strong>ost
+    <strong>R</strong>elics
+    <strong>B</strong>ring
+    <strong>A</strong>dventure
+  `;
+
+  let audio = null;
+  let activated = false;
+
+
+  // ==========================================================
+  // CLICK EGG
+  // ==========================================================
+
+  easterEgg.addEventListener("click", (event) => {
+    event.preventDefault();
+
+    // Cancel previous attempt
+    if (audio) {
+      audio.pause();
+      audio.currentTime = 0;
+      audio = null;
     }
 
+    activated = true;
 
-    const normalMessage =
-      "There’s a legendary sequence hidden here...";
-
-
-    const secretMessage = `
-      <strong>U</strong>nder
-      <strong>U</strong>nknown
-      <strong>D</strong>epths,
-      <strong>D</strong>ark
-      <strong>L</strong>egends
-      <strong>R</strong>emain;
-      <strong>L</strong>ost
-      <strong>R</strong>elics
-      <strong>B</strong>ring
-      <strong>A</strong>dventure
-    `;
-
-
-    let secretTimer = null;
-
-
-    easterEgg.addEventListener(
-      "click",
-      (event) => {
-
-        event.preventDefault();
-
-        clearTimeout(
-          secretTimer
-        );
-
-
-        // Reset
-        easterEgg.classList.remove(
-          "secret-revealed"
-        );
-
-        tooltip.textContent =
-          normalMessage;
-
-
-        // Play Contra sound
-
-        const audio =
-          new Audio(
-            "public/sounds/contra.mp3"
-          );
-
-        audio.volume = 0.6;
-
-        audio.play().catch(() => {});
-
-
-        // Reveal clue after 3 seconds
-
-        secretTimer =
-          setTimeout(
-            () => {
-
-              tooltip.innerHTML =
-                secretMessage;
-
-              easterEgg.classList.add(
-                "secret-revealed"
-              );
-
-            },
-            5500
-          );
-
-      }
+    // Reset tooltip
+    easterEgg.classList.remove(
+      "secret-revealed"
     );
 
+    tooltip.textContent =
+      normalMessage;
 
-    // Reset after leaving
-    // once secret was revealed
 
-    easterEgg.addEventListener(
-      "mouseleave",
+    // ========================================================
+    // PLAY SECRET AUDIO
+    // ========================================================
+
+    audio = new Audio(
+      "public/sounds/contra.mp3"
+    );
+
+    audio.volume = 0.6;
+
+
+    // ========================================================
+    // AUDIO FINISHED
+    // ========================================================
+
+    audio.addEventListener(
+      "ended",
       () => {
 
-        if (
-          easterEgg.classList.contains(
-            "secret-revealed"
-          )
-        ) {
+        // Reveal ONLY if:
+        // 1. egg was clicked
+        // 2. mouse is STILL hovering
 
-          easterEgg.classList.remove(
+        if (
+          activated &&
+          easterEgg.matches(":hover")
+        ) {
+          tooltip.innerHTML =
+            secretMessage;
+
+          easterEgg.classList.add(
             "secret-revealed"
           );
-
-          tooltip.textContent =
-            normalMessage;
-
         }
 
+        audio = null;
       }
     );
 
-  })();
+
+    audio.play().catch((error) => {
+      console.log(
+        "Audio could not play:",
+        error
+      );
+
+      activated = false;
+    });
+  });
+
+
+  // ==========================================================
+  // MOUSE LEAVES EGG
+  // ==========================================================
+
+  easterEgg.addEventListener(
+    "mouseleave",
+    () => {
+
+      // Cancel the secret attempt
+      activated = false;
+
+      // Hide/reset secret
+      easterEgg.classList.remove(
+        "secret-revealed"
+      );
+
+      tooltip.textContent =
+        normalMessage;
+    }
+  );
 
 })();
 

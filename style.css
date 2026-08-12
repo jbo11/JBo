@@ -364,19 +364,10 @@ body.dark-header .site-footer{color:var(--dark)}
 #gravityBtn:hover::after { opacity: 1; transform: translateY(0); }
 
 /* ============= MUSIC ============= */
-#musicPlayer {
-  position: fixed;
-  bottom: 250px;
-  right: 220px;
-  width: 0;
-  height: 0;
-  z-index: 9999;
-}
-
+#musicPlayer { position: fixed; bottom: 250px; right: 320px; width: 0; height: 0; z-index: 9999; }
 #winamp-container {position: relative;}
-
 #musicToggle { position: relative; font-size: 18px; }
-#musicToggle::after { content: "Put on some tunes!"; position: absolute; bottom: 140%; right: 0; background: #1d1d1d; color: #fff; font-size: 11px; padding: 6px 10px; border-radius: 4px; white-space: nowrap; opacity: 0; transform: translateY(5px); pointer-events: none; transition: 0.2s ease; }
+#musicToggle::after { content: "Let's whip the llama's ass!"; position: absolute; bottom: 140%; right: 0; background: #1d1d1d; color: #fff; font-size: 11px; padding: 6px 10px; border-radius: 4px; white-space: nowrap; opacity: 0; transform: translateY(5px); pointer-events: none; transition: 0.2s ease; }
 #musicToggle:hover::after { opacity: 1; transform: translateY(0); }
 
 /* ============= EASTER EGG ============= */
@@ -516,7 +507,7 @@ body.dark-header .site-footer{color:var(--dark)}
 
   /* Partners */
   .partners-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 30px; }
-  .partner { width: 100%; height: 104px; border: 1px solid rgba(255,255,255,.06); }
+  .partner { width: 120px; height: 120px; margin: 0 auto; border: 1px solid rgba(255,255,255,.06); display: flex; align-items: center; justify-content: center;}
   .partner img { max-width: 64px; max-height: 58px; }
 
   /* Testimonials */
@@ -540,4 +531,4 @@ body.dark-header .site-footer{color:var(--dark)}
 
 @media (max-width: 600px) { .works-grid { grid-template-columns: 1fr; } .work { height: min(58vw, 240px); min-height: 190px; } .page { padding-left: 0; padding-right: 0; } .page-works .container, .page-partners .container { width: calc(100% - 28px); } }
 @media (max-width: 380px) { .container, .hero-content { width: calc(100% - 28px); } .site-header { padding-left: 14px; padding-right: 14px; } .hero-title { font-size: clamp(42px, 13vw, 54px); } .partners-grid { grid-template-columns: 1fr 1fr; gap: 10px; } .partner { height: 92px; } .resume-col { padding: 16px; } }
-@media (hover: none) and (pointer: coarse) { .services-list li a:hover { padding-left: 0; } .partner:hover { transform: none; box-shadow: none; background: transparent; } .partner:hover img { transform: none; } .work:hover .work-img { transform: none; } }
+@media (hover: none) and (pointer: coarse) { .services-list li a { font-size: 17px; }.services-list li a:hover { padding-left: 0; } .partner:hover { transform: none; box-shadow: none; background: transparent; } .partner:hover img { transform: none; } .work:hover .work-img { transform: none; } }

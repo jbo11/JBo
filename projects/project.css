@@ -990,7 +990,7 @@ and
 
   .page {
     padding:
-      92px 0
+      115px 0
       48px;
   }
 
@@ -998,6 +998,17 @@ and
   .page {
     padding-top:
       45px;
+  }
+
+  .page:first-child .eyebrow {
+    display: block;
+    visibility: visible;
+    opacity: 1;
+    position: relative;
+    z-index: 5;
+
+    margin-top: 0;
+    margin-bottom: 24px;
   }
 
   .container {
@@ -1039,7 +1050,6 @@ and
     letter-spacing:
       1px;
   }
-
 }
 
 
