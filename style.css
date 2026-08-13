@@ -5,7 +5,6 @@ a{color:inherit;text-decoration:none}
 ul{list-style:none}
 img{max-width:100%;display:block}
 button{font-family:inherit;border:0;background:none;cursor:pointer;color:inherit}
-
 :root{
   --accent:#f4ca30;       /* yellow - f4ca30*/
   --dark:#1d1d1d;
@@ -13,7 +12,6 @@ button{font-family:inherit;border:0;background:none;cursor:pointer;color:inherit
   --light:#f6f6f6;
   --transition:cubic-bezier(.86,0,.07,1);
 }
-
 /* ============= FULLPAGE CONTAINER ============= */
 #fullpage{
   height:100vh;
@@ -33,7 +31,6 @@ button{font-family:inherit;border:0;background:none;cursor:pointer;color:inherit
 .container{width:min(1200px,90%);margin:0 auto;position:relative;z-index:2}
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
 .center{text-align:center}
-
 /* ============= HEADER ============= */
 .site-header{
   position:fixed;top:0;left:0;right:0;z-index:50;
@@ -49,11 +46,9 @@ button{font-family:inherit;border:0;background:none;cursor:pointer;color:inherit
 .logo-text{display:flex;flex-direction:column;line-height:1;color:#fff;}
 .logo-text strong{font-weight:700;letter-spacing:1px;font-size:18px}
 .logo-text em{font-style:normal;font-size:11px;letter-spacing:2px;text-transform:lowercase;opacity:.85;margin-top:4px}
-
 .social-nav {position: fixed; right: 50px; bottom: 25px; top: auto; transform: none; z-index: 60; display: flex; gap: 30px;}
 .social-nav a{color:#fff;font-size:21px;transition:.25s;opacity:.95}
 .social-nav a:hover{color:var(--accent)}
-
 .menu-toggle{
   width:40px;height:30px;display:flex;flex-direction:column;justify-content:space-between;
 }
@@ -62,12 +57,10 @@ button{font-family:inherit;border:0;background:none;cursor:pointer;color:inherit
 .menu-toggle span:nth-child(3){width: 100%;}
 .menu-toggle span:nth-child(2){width:100%; margin: 0 auto;}
 .menu-toggle:hover span{background:var(--accent)}
-
 /* Header color shift on light pages */
 body.dark-header .logo-mark { content: url("public/jb_logo_light.png"); }
 body.dark-header .logo-text,body.dark-header .social-nav a{color: #1d1d1d}
 body.dark-header .menu-toggle span{background: #1d1d1d;}
-
 /* ============= DOT NAV ============= */
 .dot-nav{
   position:fixed;top:50%;right:35px;transform:translateY(-50%);z-index:40;
@@ -87,7 +80,6 @@ body.dark-header .menu-toggle span{background: #1d1d1d;}
 .dot-nav a.active{background: var(--accent) !important;transform:scale(1.4)}
 body.dark-header .dot-nav a{background:rgba(0,0,0,.3)}
 body.dark-header .dot-nav a.active{background:var(--accent)}
-
 /* ============= SIDE LABEL ============= */
 .section-label{
   position:fixed;left:35px;top:50%;transform:translateY(-50%) rotate(-90deg);transform-origin:left center;
@@ -97,7 +89,6 @@ body.dark-header .dot-nav a.active{background:var(--accent)}
 }
 .section-label::before{content:"";display:inline-block;width:40px;height:1px;background:currentColor;margin-right:14px}
 body.dark-header .section-label{color:var(--dark)}
-
 /* ============= FOOTER ============= */
 .site-footer{
   position:fixed;left:0;right:0;bottom:25px;z-index:40;
@@ -108,14 +99,12 @@ body.dark-header .section-label{color:var(--dark)}
 .site-footer .lang a{opacity:.7;transition:.2s}
 .site-footer .lang a.active,.site-footer .lang a:hover{opacity:1;color:var(--accent)}
 body.dark-header .site-footer{color:var(--dark)}
-
 /* ============= TYPOGRAPHY ============= */
 .eyebrow{font-size:16px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);line-height:1.7;margin-bottom:25px}
 .eyebrow span{color:var(--accent);font-weight:600}
 .section-title{font-size:36px;line-height:1.2;font-weight:700;margin-bottom:25px;color:var(--dark)}
 .section-title .accent { color: var(--accent); }
 .lead{color:#666;line-height:1.8;font-size:15px;max-width:520px}
-
 /* ============= PAGE 1 — HERO ============= */
 .page-hero{color:#fff;background:#1d1d1d}
 .hero-bg{
@@ -136,9 +125,7 @@ body.dark-header .site-footer{color:var(--dark)}
 }
 .hero-title .accent{color:var(--accent)}
 .hero-line{display:block;width:90px;height:3px;background:var(--accent);margin-top:1px; margin-left:90px;}
-
 /* ============= PAGE 2 — ABOUT ============= */
-
 .page-about{background:#272727;color:#e5e5e5;}
 .skill{margin-bottom:30px;}
 .skill-head{display:flex;justify-content:space-between;font-size:13px;text-transform:uppercase;letter-spacing:2px;margin-bottom:10px;color:#bfbfbf;font-weight:600;}
@@ -147,7 +134,6 @@ body.dark-header .site-footer{color:var(--dark)}
 .skill-head span{color:#9e9e9e;}
 .page-about h1,.page-about h2,.page-about h3{color:#ffffff;}
 .page-about p{color:#9e9e9e;}
-
 /* ============= PAGE 3 — PROJECTS/WORKS ============= */
 .page-works{background:var(--light)}
 .works-grid{
@@ -171,7 +157,6 @@ body.dark-header .site-footer{color:var(--dark)}
   padding-bottom:6px;transition:.25s;
 }
 .btn-link:hover{color:var(--accent);gap:16px}
-
 /* ============= PAGE 4 — SERVICES ============= */
 .page-services{background:#272727;color:#e5e5e5;}
 .services-list{margin-top:30px}
@@ -192,7 +177,6 @@ body.dark-header .site-footer{color:var(--dark)}
 }
 .years-badge strong{font-size:64px;font-weight:800;line-height:1}
 .years-badge span{font-size:11px;text-transform:uppercase;letter-spacing:2px;line-height:1.6;font-weight:600}
-
 /* ============= PAGE 5 — RESUME ============= */
 .page-resume{background:var(--light); position: relative; background: url('https://images.pexels.com/photos/15977090/pexels-photo-15977090.jpeg?_gl=1*fzzo62*_ga*NzE0MTUzMjc3LjE3NzcwNTI4Njg.*_ga_8JE65Q40S6*czE3NzcwNTI4NjckbzEkZzEkdDE3NzcwNTQ3NzEkajYwJGwwJGgw') center/cover no-repeat; }
 .page-resume::before{ content:""; position:absolute; inset:0; background: rgba(0,0,0,0.45); /* adjust darkness */ z-index:0; }
@@ -209,7 +193,6 @@ body.dark-header .site-footer{color:var(--dark)}
 .resume-col::-webkit-scrollbar {width: 6px;}
 .resume-col::-webkit-scrollbar-thumb {background: var(--accent);border-radius: 10px; background: rgba(255,255,255,0.5);}
 .resume-col::-webkit-scrollbar-track {background: transparent;}
-
 .page-resume .section-title,
 .page-resume .resume-heading,
 .page-resume .resume-item h4{
@@ -218,8 +201,6 @@ body.dark-header .site-footer{color:var(--dark)}
 .page-resume .resume-item p{ color:rgba(255,255,255,0.8); }
 .page-resume .resume-item{ border-bottom:1px solid rgba(255,255,255,0.15); }
 .resume-section-label { margin: 24px 0 16px; color:var(--accent); font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; }
-
-
 /* ============= PAGE 6 — PARTNERS ============= */
 .page-partners{background:#272727;color:#e5e5e5;}
 .partners-grid { display: grid; grid-template-columns: repeat(6, 120px); /* fixed equal size */ justify-content: center; /* 👈 centers whole grid */ gap: 80px 100px; /* vertical / horizontal spacing */ margin-top: 60px; }
@@ -227,7 +208,6 @@ body.dark-header .site-footer{color:var(--dark)}
 .partner img { max-width: 70px; max-height: 70px; object-fit: contain; filter: brightness(0) invert(1); /* 👈 makes logos white */ opacity: 0.8; transition: 0.3s ease; }
 .partner:hover { transform: translateY(-8px) scale(1.08); /* lift + scale */ box-shadow: 0 10px 30px rgba(0,0,0,0.25); /* soft shadow */ background: color-mix(in srgb, var(--accent) 70%, transparent); }
 .partner:hover img { opacity: 1; transform: scale(1.1); }
-
 /* ============= PAGE 7 — TESTIMONIALS ============= */
 /*.page-testimonials{background:var(--light)} */
 .page-testimonials{ position: relative; background: url('public/img2.jpg') center/cover no-repeat; }
@@ -242,7 +222,6 @@ body.dark-header .site-footer{color:var(--dark)}
 .testimonial p{font-size:13px;line-height:1.8;color:#000;margin-bottom:20px;font-style:italic}
 .testimonial h5{font-size:14px;text-transform:uppercase;letter-spacing:2px;color:var(--dark);font-weight:700}
 .testimonial em{font-size:12px;color:var(--muted);font-style:italic}
-
 /* ============= PAGE 8 — CONTACT ============= */
 .page-contact{background:#272727;color:#e5e5e5;}
 .contact-info{margin-top:30px}
@@ -261,7 +240,6 @@ body.dark-header .site-footer{color:var(--dark)}
   transition:.3s;
 }
 .contact-form button:hover{background:var(--dark);color:#fff}
-
 /* ============= OVERLAY MENU ============= */
 .overlay-menu{
   position:fixed;inset:0;background:rgba(29,29,29,.97);z-index:100;
@@ -281,7 +259,6 @@ body.dark-header .site-footer{color:var(--dark)}
   transition:.25s;
 }
 .close-menu:hover{color:var(--accent);transform:rotate(90deg)}
-
 /* ============= ANIMATIONS ============= */
 .page .eyebrow,.page .section-title,.page .lead,.page .skill,.page .work,
 .page .services-list li,.page .services-image,.page .resume-item,.page .partner,
@@ -293,7 +270,6 @@ body.dark-header .site-footer{color:var(--dark)}
 .page.is-active .services-image,.page.is-active .resume-item,.page.is-active .partner,
 .page.is-active .testimonial,.page.is-active .contact-info,.page.is-active .contact-form,
 .page.is-active .hero-content > *{opacity:1;transform:none}
-
 /* stagger */
 .page.is-active .skill:nth-child(1){transition-delay:.05s}
 .page.is-active .skill:nth-child(2){transition-delay:.15s}
@@ -315,7 +291,6 @@ body.dark-header .site-footer{color:var(--dark)}
 .page.is-active .hero-content > *:nth-child(1){transition-delay:.1s}
 .page.is-active .hero-content > *:nth-child(2){transition-delay:.25s}
 .page.is-active .hero-content > *:nth-child(3){transition-delay:.45s}
-
 /* ============= RESPONSIVE ============= */
 @media (max-width:900px){
   html{ scroll-behavior:auto; overflow-x:hidden; -webkit-text-size-adjust:100%; }
@@ -340,7 +315,6 @@ body.dark-header .site-footer{color:var(--dark)}
     opacity:1;transform:none;
   }
 }
-
 /* ============= COLOR ACCENT ============= */
 :root { --accent: #f4ca30; }
 .settings-btn { position: fixed; bottom: 20px; right: 20px; font-size: 20px; padding: 10px; cursor: pointer; }
@@ -357,58 +331,44 @@ body.dark-header .site-footer{color:var(--dark)}
 #settingsBtn { position: relative; font-size: 18px; }
 #settingsBtn::after { content: "Give the theme a fresh coat of paint!"; position: absolute; bottom: 140%; right: 0; background: #1d1d1d; color: #fff; font-size: 11px; padding: 6px 10px; border-radius: 4px; white-space: nowrap; opacity: 0; transform: translateY(5px); pointer-events: none; transition: 0.2s ease; }
 #settingsBtn:hover::after { opacity: 1; transform: translateY(0); }
-
 /* ============= GRAVITY ============= */
 #gravityBtn { position: relative; font-size: 18px; }
 #gravityBtn::after { content: "DO NOT CLICK!"; position: absolute; bottom: 140%; right: 0; background: #1d1d1d; color: #fff; font-size: 11px; padding: 6px 10px; border-radius: 4px; white-space: nowrap; opacity: 0; transform: translateY(5px); pointer-events: none; transition: 0.2s ease; }
 #gravityBtn:hover::after { opacity: 1; transform: translateY(0); }
-
 /* ============= MUSIC ============= */
 #musicPlayer { position: fixed; bottom: 250px; right: 320px; width: 0; height: 0; z-index: 9999; }
 #winamp-container {position: relative;}
 #musicToggle { position: relative; font-size: 18px; }
 #musicToggle::after { content: "Let's whip the llama's ass!"; position: absolute; bottom: 140%; right: 0; background: #1d1d1d; color: #fff; font-size: 11px; padding: 6px 10px; border-radius: 4px; white-space: nowrap; opacity: 0; transform: translateY(5px); pointer-events: none; transition: 0.2s ease; }
 #musicToggle:hover::after { opacity: 1; transform: translateY(0); }
-
 /* ============= EASTER EGG ============= */
 #easterEgg { position: relative; font-size: 18px; }
 .easter-tooltip { position: absolute; bottom: 140%; right: 0; width: 290px; padding: 8px 12px; background: #1d1d1d; color: #fff; font-size: 11px; line-height: 1.6; text-align: left; border-radius: 4px; opacity: 0; visibility: hidden; transform: translateY(5px); pointer-events: none; transition: opacity 0.25s ease, transform 0.25s ease; z-index: 999999; }
 #easterEgg:hover .easter-tooltip { opacity: 1; visibility: visible; transform: translateY(0); }
 #easterEgg.secret-revealed .easter-tooltip { opacity: 1; visibility: visible; transform: translateY(0); color: #fff; }
 .easter-tooltip strong { color: #fff; font-weight: 800; }
-
 /* ============================================================
    PARTNER COIN BOX EASTER EGG
    ============================================================ */
-
 /* ------------------------------------------------------------ PARTNER CONTAINER ------------------------------------------------------------ */
 .partner { position: relative; width: 120px; height: 120px; display: flex; align-items: center; justify-content: center; cursor: pointer; overflow: visible; user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent; }
 .partner-logo { position: relative; z-index: 2; transition: opacity 0.25s ease, transform 0.3s ease; }
-
-
 /* ============================================================ GAME MODE ACTIVE ============================================================ */
 .partner.partner-game-active { background: transparent !important; box-shadow: none !important; transform: none !important; }
 .partner.partner-game-active:hover { background: transparent !important; box-shadow: none !important; transform: none !important; }
-
 /* Hide only original partner logo */
 .partner.partner-game-active .partner-logo { opacity: 0 !important; visibility: hidden; pointer-events: none; transform: none !important; }
-
 /* ============================================================ QUESTION BLOCK / USED BLOCK SAME EXACT SIZE AS PARTNER BOX ============================================================ */
 .partner-game-box { position: absolute; left: 0; top: 0; width: 120px !important; height: 120px !important; max-width: none !important; max-height: none !important; margin: 0 !important; object-fit: contain; display: block; z-index: 20; opacity: 1 !important; visibility: visible !important; filter: none !important; cursor: pointer; pointer-events: auto !important; image-rendering: pixelated; image-rendering: crisp-edges; transform: translateY(0); transition: none !important; -webkit-user-drag: none; user-select: none; }
-
 /* Prevent normal partner image hover */
 .partner.partner-game-active:hover .partner-game-box { transform: none; filter: none !important; }
-
-
 /* ============================================================ QUESTION BLOCK BUMP ============================================================ */
 .partner-game-box.bump { animation: partnerBlockBump 0.18s ease-out; }
 @keyframes partnerBlockBump { 0% { transform: translateY(0); } 40% { transform: translateY(-12px); } 70% { transform: translateY(-4px); } 100% { transform: translateY(0); } }
-
 /* ============================================================ COIN Starts HIDDEN BEHIND the question block and emerges from the TOP EDGE ============================================================ */
 .partner-coin { position: absolute; /* Center horizontally. */ left: 50%; /* Start inside the very top of the block. */ top: 0; width: 60px !important; height: 68px !important; max-width: none !important; max-height: none !important; object-fit: contain; display: block; /* IMPORTANT: Question block is z-index: 20. Coin must be BELOW it initially so the block hides the portion of the coin that is still inside. */ z-index: 15; opacity: 1; visibility: visible; filter: none !important; pointer-events: none; image-rendering: pixelated; image-rendering: crisp-edges; -webkit-user-drag: none; user-select: none; transform-origin: center center; transition: none !important; animation: partnerCoinRise 0.72s cubic-bezier(.17,.67,.28,1) forwards; }
 .partner.partner-game-active
 .partner-coin, .partner.partner-game-active:hover .partner-coin { filter: none !important; }
-
 @keyframes partnerCoinRise {
   /* Completely behind the block. Nothing should be visible yet. */
   0% { transform: translateX(-50%) translateY(20px); opacity: 1; }
@@ -427,13 +387,11 @@ body.dark-header .site-footer{color:var(--dark)}
   /* Begin fading. */
   92% { transform: translateX(-50%) translateY(-102px); opacity: 0.65; }
   100% { transform: translateX(-50%) translateY(-110px); opacity: 0; }
-
 }
 .partner.partner-block-used .partner-game-box { cursor: default; filter: none !important; }
 .partner.partner-block-used .partner-game-box.bump { animation: none; }
 @media (max-width: 900px) { .partner-game-box { width: 120px !important; height: 120px !important; left: 0; top: 0; margin: 0 !important; } .partner-coin { width: 36px !important; height: 44px !important; top: 0; } }
 @media (prefers-reduced-motion: reduce) { .partner-game-box.bump { animation-duration: 0.01ms; } .partner-coin { animation-duration: 0.4s; } }
-
 /* ========================================================================== 
    MOBILE POLISH — STANDARD PROFILE
    ========================================================================== */
@@ -459,7 +417,6 @@ body.dark-header .site-footer{color:var(--dark)}
   .eyebrow { font-size: 12px; letter-spacing: 2.2px; margin-bottom: 18px; }
   .section-title { font-size: clamp(27px, 7.8vw, 34px); line-height: 1.18; }
   .lead { max-width: none; font-size: 14px; line-height: 1.75; }
-
   /* Hero */
   .page-hero { min-height: 100svh; padding: 0; align-items: center; }
   @supports (height: 100dvh) { .page-hero { min-height: 100dvh; } }
@@ -469,13 +426,11 @@ body.dark-header .site-footer{color:var(--dark)}
   .hero-content .eyebrow { margin-bottom: 18px; font-size: 11px; }
   .hero-title { max-width: 10ch; font-size: clamp(46px, 14vw, 68px); line-height: .94; letter-spacing: -1.5px; }
   .hero-line { width: 64px; margin: 10px 0 0 42px; }
-
   /* About */
   .page-about .two-col { gap: 48px; }
   .skill { margin-bottom: 22px; }
   .skill-head { gap: 14px; font-size: 10px; letter-spacing: 1.25px; line-height: 1.45; }
   .skill-head span:first-child { max-width: 78%; }
-
   /* Projects — show labels by default because touch has no hover */
   .works-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin: 28px 0 0; }
   .work { height: 210px; border-radius: 2px; }
@@ -483,7 +438,6 @@ body.dark-header .site-footer{color:var(--dark)}
   .work-info { opacity: 1; justify-content: flex-end; align-items: flex-start; text-align: left; padding: 18px; }
   .work-info h4 { margin: 0 0 3px; font-size: 14px; }
   .work-info span { font-size: 9px; letter-spacing: 2px; }
-
   /* Services */
   .services-list { margin-top: 20px; }
   .services-list li a { min-height: 54px; padding: 12px 0; gap: 12px; font-size: clamp(16px, 4.8vw, 20px); line-height: 1.35; }
@@ -492,7 +446,6 @@ body.dark-header .site-footer{color:var(--dark)}
   .years-badge { left: 14px; right: 14px; bottom: 0; width: auto; padding: 18px 20px; justify-content: flex-start; }
   .years-badge strong { font-size: 46px; }
   .years-badge span { font-size: 9px; letter-spacing: 1.5px; }
-
   /* Resume — no nested scrolling on touch devices */
   .page-resume { background-attachment: scroll; }
   .resume-grid { gap: 22px; margin-top: 22px; }
@@ -504,23 +457,19 @@ body.dark-header .site-footer{color:var(--dark)}
   .resume-item .meta span { display: block; margin-top: 2px; }
   .resume-item p { font-size: 12px; line-height: 1.72; }
   .resume-section-label { margin: 20px 0 8px; font-size: 11px; }
-
   /* Partners */
   .partners-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 30px; }
   .partner { width: 120px; height: 120px; margin: 0 auto; border: 1px solid rgba(255,255,255,.06); display: flex; align-items: center; justify-content: center;}
   .partner img { max-width: 64px; max-height: 58px; }
-
   /* Testimonials */
   .testimonials { gap: 16px; margin-top: 28px; }
   .testimonial { padding: 26px 22px; border-radius: 12px; }
   .testimonial p { font-size: 13px; line-height: 1.75; }
-
   /* Contact */
   .contact-form .row { grid-template-columns: 1fr; gap: 0; }
   .contact-form input,
   .contact-form textarea { font-size: 16px; margin-bottom: 14px; }
   .contact-form button { width: 100%; min-height: 50px; justify-content: center; }
-
   /* Full-screen nav */
   .overlay-menu { align-items: flex-start; justify-content: flex-start; overflow-y: auto; padding: calc(88px + env(safe-area-inset-top)) 24px calc(32px + env(safe-area-inset-bottom)); }
   .overlay-menu ul { width: 100%; text-align: left; }
@@ -528,7 +477,6 @@ body.dark-header .site-footer{color:var(--dark)}
   .overlay-menu a { display: flex; align-items: center; min-height: 56px; width: 100%; font-size: clamp(21px, 7vw, 30px); line-height: 1; letter-spacing: 1.5px; }
   .close-menu { position: fixed; top: calc(18px + env(safe-area-inset-top)); right: 18px; font-size: 38px; }
 }
-
 @media (max-width: 600px) { .works-grid { grid-template-columns: 1fr; } .work { height: min(58vw, 240px); min-height: 190px; } .page { padding-left: 0; padding-right: 0; } .page-works .container, .page-partners .container { width: calc(100% - 28px); } }
 @media (max-width: 380px) { .container, .hero-content { width: calc(100% - 28px); } .site-header { padding-left: 14px; padding-right: 14px; } .hero-title { font-size: clamp(42px, 13vw, 54px); } .partners-grid { grid-template-columns: 1fr 1fr; gap: 10px; } .partner { height: 92px; } .resume-col { padding: 16px; } }
 @media (hover: none) and (pointer: coarse) { .services-list li a { font-size: 17px; }.services-list li a:hover { padding-left: 0; } .partner:hover { transform: none; box-shadow: none; background: transparent; } .partner:hover img { transform: none; } .work:hover .work-img { transform: none; } }

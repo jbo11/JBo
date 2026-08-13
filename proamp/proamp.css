@@ -2,7 +2,6 @@
    PROAMP — Pixel-exact Winamp 2.x CSS clone
    Colors and layout matched to reference screenshot
    ===================================================== */
-
 :root {
   --bg:       #0d1a13;
   --bg-d:     #060e09;
@@ -23,10 +22,8 @@
   --blue-sel: #1a4a8a;
   --lcd-bg:   #000;
 }
-
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { height: 100%; background: #050f08; overflow: auto; }
-
 /* ── page ── */
 .page {
   min-height: 100vh;
@@ -35,7 +32,6 @@ html, body { height: 100%; background: #050f08; overflow: auto; }
   justify-content: center;
   padding: 20px;
 }
-
 .stage {
   transform: scale(2);
   transform-origin: top center;
@@ -44,7 +40,6 @@ html, body { height: 100%; background: #050f08; overflow: auto; }
   margin-bottom: 80px;
   user-select: none;
 }
-
 /* =====================================================
    WINDOW BASE
    ===================================================== */
@@ -60,11 +55,9 @@ html, body { height: 100%; background: #050f08; overflow: auto; }
     1px 1px 0 0 rgba(255,255,255,.25) inset,
     -1px -1px 0 0 rgba(0,0,0,.8) inset;
 }
-
 .win-main     { height: 116px; }
 .win-eq       { height: 116px; }
 .win-playlist { height: 166px; }
-
 /* =====================================================
    TITLE BAR — 275×14px
    ===================================================== */
@@ -75,7 +68,6 @@ html, body { height: 100%; background: #050f08; overflow: auto; }
   background: linear-gradient(to bottom, #233322 0%, #142014 100%);
   border-bottom: 1px solid #000;
 }
-
 /* Winamp title bar horizontal stripe pattern */
 .title-bar::before, .title-bar::after {
   content: "";
@@ -93,7 +85,6 @@ html, body { height: 100%; background: #050f08; overflow: auto; }
 .win-eq .title-bar::after        { right: 18px; width: 68px; }
 .win-playlist .title-bar::before { left: 8px;   width: 60px; }
 .win-playlist .title-bar::after  { right: 18px; width: 60px; }
-
 .tb-text {
   position: absolute;
   inset: 0;
@@ -109,7 +100,6 @@ html, body { height: 100%; background: #050f08; overflow: auto; }
   text-shadow: 0 0 3px rgba(155,255,155,.6), 0 1px 0 #000;
   pointer-events: none;
 }
-
 /* title buttons 9×9 at top:3 */
 .tb-btn {
   position: absolute;
@@ -120,13 +110,11 @@ html, body { height: 100%; background: #050f08; overflow: auto; }
   border-radius: 1px;
 }
 .tb-btn:active { filter: brightness(.7); }
-
 .tb-logo     { left: 6px;   background: linear-gradient(135deg, var(--btn-hi) 0%, var(--btn) 60%, var(--btn-sh) 100%); }
 .tb-minimize { left: 244px; background: linear-gradient(to bottom, var(--btn-hi) 10%, var(--btn) 50%, var(--btn-sh) 100%); }
 .tb-shade    { left: 254px; background: linear-gradient(to bottom, var(--btn-hi) 10%, var(--btn) 50%, var(--btn-sh) 100%); }
 .tb-close    { left: 264px; background: linear-gradient(to bottom, var(--btn-hi) 10%, var(--btn) 50%, var(--btn-sh) 100%); }
 .tb-close::before { content: "×"; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 8px; font-weight: 900; color: #000; }
-
 /* =====================================================
    CLUTTER BAR — left:10, top:22, 8×43
    ===================================================== */
@@ -153,7 +141,6 @@ html, body { height: 100%; background: #050f08; overflow: auto; }
 .cb-i { top: 18px; }
 .cb-d { top: 25px; height: 8px; }
 .cb-v { top: 33px; }
-
 /* =====================================================
    PLAY-PAUSE STATE INDICATOR — left:26, top:28, 9×9
    ===================================================== */
@@ -187,7 +174,6 @@ html, body { height: 100%; background: #050f08; overflow: auto; }
   display: flex; align-items: center; justify-content: center;
   color: var(--green-dim);
 }
-
 /* =====================================================
    TIME DISPLAY — left:39, top:26, 59×13px
    ===================================================== */
@@ -214,7 +200,6 @@ html, body { height: 100%; background: #050f08; overflow: auto; }
     0 0 1px rgba(155,255,155,.5);
   line-height: 1;
 }
-
 /* =====================================================
    VISUALIZER — left:24, top:43, 75×10px
    ===================================================== */
@@ -226,7 +211,6 @@ html, body { height: 100%; background: #050f08; overflow: auto; }
   overflow: hidden;
 }
 .visualizer canvas { display: block; }
-
 /* =====================================================
    MARQUEE — left:111, top:24, 154×12px
    ===================================================== */
@@ -252,16 +236,13 @@ html, body { height: 100%; background: #050f08; overflow: auto; }
   padding-left: 100%;
   animation: marquee 18s linear infinite;
 }
-
 .marquee-inner {
   will-change: transform;
 }
-
 @keyframes marquee {
   0%   { transform: translateX(0); }
   100% { transform: translateX(-100%); }
 }
-
 /* =====================================================
    KBPS / KHZ — left:111/156, top:43  mono-stereo left:212, top:41
    ===================================================== */
@@ -304,7 +285,6 @@ html, body { height: 100%; background: #050f08; overflow: auto; }
   border-color: var(--green-dim);
   text-shadow: 0 0 2px var(--green-glow);
 }
-
 /* =====================================================
    VOLUME left:107, top:57, 68×13   BALANCE left:177, top:57, 38×13
    ===================================================== */
@@ -326,7 +306,6 @@ html, body { height: 100%; background: #050f08; overflow: auto; }
   box-shadow: inset 0 0 0 1px rgba(0,0,0,.6);
   overflow: hidden;
 }
-
 /* Labels for vol/bal */
 .vol-lbl {
   position: absolute;
@@ -338,7 +317,6 @@ html, body { height: 100%; background: #050f08; overflow: auto; }
   z-index: 2;
   padding: 4px 2px;
 }
-
 /* range resets */
 .h-slider {
   -webkit-appearance: none;
@@ -350,7 +328,6 @@ html, body { height: 100%; background: #050f08; overflow: auto; }
   cursor: ew-resize;
 }
 .h-slider:focus { outline: none; }
-
 /* Volume thumb — Winamp orange knob */
 .volume-wrap .h-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
@@ -366,7 +343,6 @@ html, body { height: 100%; background: #050f08; overflow: auto; }
   border: 1px solid #000;
   border-radius: 1px;
 }
-
 /* Balance thumb — green knob */
 .balance-wrap .h-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
@@ -382,10 +358,8 @@ html, body { height: 100%; background: #050f08; overflow: auto; }
   border: 1px solid #000;
   border-radius: 1px;
 }
-
 .h-slider::-webkit-slider-runnable-track { background: transparent; }
 .h-slider::-moz-range-track { background: transparent; border: none; }
-
 /* =====================================================
    EQ / PL BUTTONS — left:219, top:58, 46×12
    ===================================================== */
@@ -413,7 +387,6 @@ html, body { height: 100%; background: #050f08; overflow: auto; }
 }
 .win-btn.on { color: #000; }
 .win-btn:active { box-shadow: inset 0 -1px 0 rgba(255,255,255,.3), inset 0 1px 0 rgba(0,0,0,.4); filter: brightness(.9); }
-
 /* =====================================================
    POSITION SCRUBBER — left:16, top:72, 248×10
    ===================================================== */
@@ -452,7 +425,6 @@ html, body { height: 100%; background: #050f08; overflow: auto; }
 }
 .pos-slider::-webkit-slider-runnable-track { background: transparent; }
 .pos-slider::-moz-range-track { background: transparent; border: none; }
-
 /* =====================================================
    TRANSPORT BUTTONS — top:88, each 23×18
    prev:left:16 play:39 pause:62 stop:85 next:108(22w)
@@ -475,13 +447,11 @@ html, body { height: 100%; background: #050f08; overflow: auto; }
   box-shadow: inset 0 -1px 0 rgba(255,255,255,.2), inset 0 1px 0 rgba(0,0,0,.5);
   filter: brightness(.85);
 }
-
 .btn-previous { left: 16px; top: 0; width: 23px; height: 18px; }
 .btn-play     { left: 39px; top: 0; width: 23px; height: 18px; }
 .btn-pause    { left: 62px; top: 0; width: 23px; height: 18px; }
 .btn-stop     { left: 85px; top: 0; width: 23px; height: 18px; }
 .btn-next     { left: 108px; top: 0; width: 22px; height: 18px; }
-
 /* Button glyphs */
 .btn-previous::before {
   content: ""; width: 0; height: 0;
@@ -519,7 +489,6 @@ html, body { height: 100%; background: #050f08; overflow: auto; }
   content: ""; width: 2px; height: 9px; background: #000;
   position: absolute; right: 3px;
 }
-
 /* eject — left:136, top:89, 22×16 */
 .btn-eject {
   position: absolute;
@@ -537,7 +506,6 @@ html, body { height: 100%; background: #050f08; overflow: auto; }
   content: ""; width: 10px; height: 2px; background: #000;
   position: absolute; bottom: 3px; left: 50%; transform: translateX(-50%);
 }
-
 /* =====================================================
    SHUFFLE / REPEAT — left:164, top:89, 74×15
    ===================================================== */
@@ -567,7 +535,6 @@ html, body { height: 100%; background: #050f08; overflow: auto; }
 .sr-btn:active { filter: brightness(.85); }
 .shuffle-btn { width: 47px; }
 .repeat-btn  { width: 28px; margin-left: -1px; }
-
 .sr-led {
   display: inline-block;
   width: 4px; height: 4px;
@@ -578,7 +545,6 @@ html, body { height: 100%; background: #050f08; overflow: auto; }
   background: var(--green);
   box-shadow: 0 0 3px var(--green);
 }
-
 /* about — left:253, top:91, 13×15 */
 .about-btn {
   position: absolute;
@@ -592,7 +558,6 @@ html, body { height: 100%; background: #050f08; overflow: auto; }
   font-size: 8px; font-weight: 900; color: #000;
 }
 .about-btn::after { content: "?"; }
-
 /* =====================================================
    EQUALIZER WINDOW
    ===================================================== */
@@ -611,7 +576,6 @@ html, body { height: 100%; background: #050f08; overflow: auto; }
 }
 .eq-on-btn   { left: 14px; width: 26px; }
 .eq-auto-btn { left: 40px; width: 32px; }
-
 .eq-led {
   width: 4px; height: 4px;
   background: rgba(0,0,0,.5);
@@ -619,7 +583,6 @@ html, body { height: 100%; background: #050f08; overflow: auto; }
   flex-shrink: 0;
 }
 .eq-led.on { background: var(--green); box-shadow: 0 0 3px var(--green); }
-
 /* presets left:217 top:18 44×12 */
 .eq-presets-btn {
   position: absolute;
@@ -633,7 +596,6 @@ html, body { height: 100%; background: #050f08; overflow: auto; }
   text-transform: uppercase; color: #000;
   display: flex; align-items: center; justify-content: center;
 }
-
 /* EQ graph top:17 left:86 113×19 */
 .eq-graph {
   position: absolute;
@@ -643,7 +605,6 @@ html, body { height: 100%; background: #050f08; overflow: auto; }
   border: 1px solid rgba(0,0,0,.8);
   overflow: hidden;
 }
-
 /* scale labels */
 .eq-scale { position: absolute; left: 46px; top: 0; }
 .eq-scale-lbl {
@@ -654,7 +615,6 @@ html, body { height: 100%; background: #050f08; overflow: auto; }
   text-shadow: 0 0 1px var(--green-glow);
   white-space: nowrap;
 }
-
 /* EQ bands
    preamp:left:21  60:78  170:96  310:114  600:132  1k:150  3k:168  6k:186  12k:204  14k:222  16k:240
    all top:38, height 57px (38 → 95)
@@ -680,7 +640,6 @@ html, body { height: 100%; background: #050f08; overflow: auto; }
 .eq-band:nth-child(9) { left: 204px; }
 .eq-band:nth-child(10){ left: 222px; }
 .eq-band:nth-child(11){ left: 240px; }
-
 /* slider track line */
 .eq-band::before {
   content: "";
@@ -691,7 +650,6 @@ html, body { height: 100%; background: #050f08; overflow: auto; }
   border-left: 1px solid rgba(155,255,155,.08);
   border-right: 1px solid rgba(155,255,155,.08);
 }
-
 .eq-slider {
   -webkit-appearance: none;
   appearance: none;
@@ -720,7 +678,6 @@ html, body { height: 100%; background: #050f08; overflow: auto; }
 }
 .eq-slider::-webkit-slider-runnable-track { background: transparent; }
 .eq-slider::-moz-range-track { background: transparent; width: 2px; border: none; }
-
 /* EQ frequency labels */
 .eq-labels {
   position: absolute;
@@ -746,7 +703,6 @@ html, body { height: 100%; background: #050f08; overflow: auto; }
 .eq-labels span:nth-child(9)  { left: 204px; }
 .eq-labels span:nth-child(10) { left: 222px; }
 .eq-labels span:nth-child(11) { left: 240px; }
-
 /* =====================================================
    PLAYLIST WINDOW
    ===================================================== */
@@ -754,7 +710,6 @@ html, body { height: 100%; background: #050f08; overflow: auto; }
   display: flex;
   flex-direction: column;
 }
-
 .pl-top {
   height: 20px; min-height: 20px;
   position: relative;
@@ -787,7 +742,6 @@ html, body { height: 100%; background: #050f08; overflow: auto; }
   display: flex; align-items: center; justify-content: center;
   font-size: 8px; font-weight: 900; color: #000;
 }
-
 .pl-middle {
   flex: 1; display: flex; overflow: hidden;
 }
@@ -800,7 +754,6 @@ html, body { height: 100%; background: #050f08; overflow: auto; }
 .pl-middle-center {
   flex: 1; padding: 3px 0; min-width: 0; overflow: hidden;
 }
-
 .pl-tracks {
   font-family: Tahoma, Arial, sans-serif;
   font-size: 9px; letter-spacing: .3px;
@@ -816,7 +769,6 @@ html, body { height: 100%; background: #050f08; overflow: auto; }
 .pl-row.selected { background: var(--blue-sel); color: #fff; }
 .pl-row .pl-time { flex-shrink: 0; padding-left: 8px; color: rgba(155,255,155,.7); }
 .pl-row.selected .pl-time { color: rgba(255,255,255,.8); }
-
 .pl-bottom {
   height: 38px; min-height: 38px;
   background: var(--bg-d);
@@ -843,20 +795,16 @@ html, body { height: 100%; background: #050f08; overflow: auto; }
   text-shadow: 0 0 2px var(--green-glow);
 }
 .pl-bottom-right { display: flex; gap: 2px; }
-
 /* ADD-ON */
 .h-slider::-webkit-slider-thumb {
   margin-top: 0;
 }
-
 .pos-slider::-webkit-slider-thumb {
   margin-top: 0;
 }
-
 .eq-slider {
   writing-mode: bt-lr; /* fallback */
 }
-
 .win-btn,
 .sr-btn,
 .pl-menu-btn {

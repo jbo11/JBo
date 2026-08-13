@@ -5,16 +5,13 @@
         "(prefers-reduced-motion: reduce)"
       )
       .matches;
-
   // ============================================================
   // BOOT TRANSITION
   // ============================================================
-
   const boot =
     document.getElementById(
       "bootScreen"
     );
-
   window.addEventListener(
     "load",
     () => {
@@ -29,16 +26,13 @@
       );
     }
   );
-
   // ============================================================
   // REVEAL ON SCROLL
   // ============================================================
-
   const revealItems =
     document.querySelectorAll(
       ".reveal"
     );
-
   if (
     reduceMotion ||
     !(
@@ -65,7 +59,6 @@
                   .classList.add(
                     "revealed"
                   );
-
                 observer.unobserve(
                   entry.target
                 );
@@ -77,23 +70,19 @@
           threshold: .12
         }
       );
-
     revealItems.forEach(
       (el) =>
         observer.observe(el)
     );
   }
-
   // ============================================================
   // ACTIVE NAVIGATION
   // ============================================================
-
   const navLinks = [
     ...document.querySelectorAll(
       '.desktop-nav a[href^="#"]'
     )
   ];
-
   const sections =
     navLinks
       .map((a) =>
@@ -104,7 +93,6 @@
         )
       )
       .filter(Boolean);
-
   if (
     "IntersectionObserver"
     in window
@@ -119,12 +107,10 @@
               ) {
                 return;
               }
-
               navLinks.forEach(
                 (a) => {
                   a.classList.toggle(
                     "active",
-
                     a.getAttribute(
                       "href"
                     ) ===
@@ -140,7 +126,6 @@
             "-35% 0px -55% 0px"
         }
       );
-
     sections.forEach(
       (section) =>
         navObserver.observe(
@@ -148,40 +133,33 @@
         )
     );
   }
-
   // ============================================================
   // MOBILE MENU
   // ============================================================
-
   const menuBtn =
     document.getElementById(
       "menuBtn"
     );
-
   const mobileMenu =
     document.getElementById(
       "mobileMenu"
     );
-
   function setMenu(open) {
     mobileMenu
       ?.classList.toggle(
         "open",
         open
       );
-
     mobileMenu
       ?.setAttribute(
         "aria-hidden",
         String(!open)
       );
-
     menuBtn
       ?.setAttribute(
         "aria-expanded",
         String(open)
       );
-
     menuBtn
       ?.setAttribute(
         "aria-label",
@@ -189,21 +167,18 @@
           ? "Close tech navigation"
           : "Open tech navigation"
       );
-
     if (menuBtn) {
       menuBtn.textContent =
         open
           ? "CLOSE"
           : "MENU";
     }
-
     document.body
       .classList.toggle(
         "menu-open",
         open
       );
   }
-
   menuBtn
     ?.addEventListener(
       "click",
@@ -217,7 +192,6 @@
         );
       }
     );
-
   mobileMenu
     ?.querySelectorAll("a")
     .forEach((a) => {
@@ -227,7 +201,6 @@
           setMenu(false)
       );
     });
-
   window.addEventListener(
     "resize",
     () => {
@@ -239,35 +212,28 @@
       }
     }
   );
-
   // ============================================================
   // PROJECT ARCHIVE
   // ============================================================
-
   const grid =
     document.getElementById(
       "projectGrid"
     );
-
   const modal =
     document.getElementById(
       "projectModal"
     );
-
   const modalContent =
     document.getElementById(
       "projectModalContent"
     );
-
   const modalClose =
     document.getElementById(
       "modalClose"
     );
-
   const projects =
     window.TECH_PROJECTS ||
     [];
-
   if (grid) {
     grid.innerHTML =
       projects
@@ -284,28 +250,23 @@
                 <span>
                   ${p.number}
                 </span>
-
                 <em>
                   ${p.status}
                 </em>
               </div>
-
               <div
                 class="project-card-body"
               >
                 <small>
                   ${p.label}
                 </small>
-
                 <h3>
                   ${p.title}
                 </h3>
-
                 <p>
                   ${p.summary}
                 </p>
               </div>
-
               <div
                 class="project-card-footer"
               >
@@ -316,7 +277,6 @@
                       .join(" // ")
                   }
                 </span>
-
                 <b>
                   OPEN FILE ↗
                 </b>
@@ -325,7 +285,6 @@
           `
         )
         .join("");
-
     // Project cards are dynamically created,
     // so observe them separately.
     grid
@@ -340,10 +299,8 @@
             el.classList.add(
               "revealed"
             );
-
             return;
           }
-
           const obs =
             new IntersectionObserver(
               ([entry]) => {
@@ -353,7 +310,6 @@
                   el.classList.add(
                     "revealed"
                   );
-
                   obs.disconnect();
                 }
               },
@@ -361,23 +317,19 @@
                 threshold: .1
               }
             );
-
           obs.observe(el);
         }
       );
   }
-
   // ============================================================
   // OPEN PROJECT
   // ============================================================
-
   function openProject(id) {
     const p =
       projects.find(
         (item) =>
           item.id === id
       );
-
     if (
       !p ||
       !modal ||
@@ -385,7 +337,6 @@
     ) {
       return;
     }
-
     modalContent.innerHTML = `
       <div
         class="modal-kicker"
@@ -393,23 +344,19 @@
         PROJECT FILE //
         ${p.number}
       </div>
-
       <div
         class="modal-status"
       >
         ${p.status}
       </div>
-
       <h2>
         ${p.title}
       </h2>
-
       <p
         class="modal-summary"
       >
         ${p.summary}
       </p>
-
       <div
         class="modal-tags"
       >
@@ -422,7 +369,6 @@
             .join("")
         }
       </div>
-
       <div
         class="modal-grid"
       >
@@ -430,34 +376,28 @@
           <small>
             CHALLENGE
           </small>
-
           <p>
             ${p.challenge}
           </p>
         </div>
-
         <div>
           <small>
             APPROACH
           </small>
-
           <p>
             ${p.approach}
           </p>
         </div>
-
         <div>
           <small>
             OPERATIONAL VALUE
           </small>
-
           <p>
             ${p.impact}
           </p>
         </div>
       </div>
     `;
-
     if (
       typeof modal.showModal ===
       "function"
@@ -469,13 +409,11 @@
         ""
       );
     }
-
     document.body
       .classList.add(
         "modal-open"
       );
   }
-
   grid
     ?.addEventListener(
       "click",
@@ -484,26 +422,20 @@
           e.target.closest(
             "[data-project]"
           );
-
         if (!card) return;
-
         window.TechSound
           ?.open?.();
-
         openProject(
           card.dataset.project
         );
       }
     );
-
   // ============================================================
   // CLOSE PROJECT MODAL
   // ============================================================
-
   function closeModal() {
     window.TechSound
       ?.close?.();
-
     if (
       modal?.open &&
       typeof modal.close ===
@@ -515,19 +447,16 @@
         "open"
       );
     }
-
     document.body
       .classList.remove(
         "modal-open"
       );
   }
-
   modalClose
     ?.addEventListener(
       "click",
       closeModal
     );
-
   modal
     ?.addEventListener(
       "click",
@@ -539,7 +468,6 @@
         }
       }
     );
-
   modal
     ?.addEventListener(
       "close",
@@ -550,48 +478,38 @@
           );
       }
     );
-
   // ============================================================
   // 3D ORBITAL
   // Desktop: pointer parallax
   // Touch: autonomous orbit handled by CSS
   // ============================================================
-
   const orbital =
     document.getElementById(
       "orbitalCard"
     );
-
   const canTilt =
     window
       .matchMedia?.(
         "(hover: hover) and (pointer: fine)"
       )
       .matches;
-
   if (
     orbital &&
     !reduceMotion
   ) {
-
     // =========================================
     // DESKTOP — MOUSE PARALLAX
     // =========================================
-
     if (canTilt) {
-
       orbital.classList.add(
         "orbital-pointer-mode"
       );
-
       orbital.addEventListener(
         "pointermove",
         (e) => {
-
           const rect =
             orbital
               .getBoundingClientRect();
-
           const rx =
             (
               (
@@ -601,7 +519,6 @@
                 rect.height -
               0.5
             ) * -7;
-
           const ry =
             (
               (
@@ -611,7 +528,6 @@
                 rect.width -
               0.5
             ) * 7;
-
           orbital.style.transform =
             `
               perspective(1000px)
@@ -620,77 +536,58 @@
             `;
         }
       );
-
       orbital.addEventListener(
         "pointerleave",
         () => {
-
           orbital.style.transform =
             `
               perspective(1000px)
               rotateX(0deg)
               rotateY(0deg)
             `;
-
         }
       );
-
     }
-
     // =========================================
     // TOUCH — AUTOMATIC ORBIT
     // =========================================
-
     else {
-
       orbital.classList.add(
         "orbital-auto-mode"
       );
-
     }
-
   }
-
   // ============================================================
   // SOUND INTERACTIONS
   // ============================================================
-
   const soundToggle =
     document.getElementById(
       "soundToggle"
     );
-
   function updateSoundButton() {
     if (!soundToggle) return;
-
     const enabled =
       window.TechSound
         ?.isEnabled?.();
-
     soundToggle.textContent =
       enabled
         ? "SOUND: ON"
         : "SOUND: OFF";
-
     soundToggle.setAttribute(
       "aria-pressed",
       String(Boolean(enabled))
     );
   }
-
   soundToggle
     ?.addEventListener(
       "click",
       () => {
         window.TechSound
           ?.toggle?.();
-
         updateSoundButton();
       }
     );
-
   updateSoundButton();
-
   // Only use hover sounds where hover
   // actually exists.
   const canHover =
@@ -699,7 +596,6 @@
         "(hover: hover)"
       )
       .matches;
-
   if (canHover) {
     document
       .querySelectorAll(
@@ -717,7 +613,6 @@
         }
       );
   }
-
   document
     .querySelectorAll(
       "a, button"
@@ -733,28 +628,22 @@
         );
       }
     );
-
   // ============================================================
   // MATRIX VISUAL COMMAND
   // ============================================================
-
   const matrixLayer =
     document.getElementById(
       "matrixLayer"
     );
-
   const matrixCanvas =
     document.getElementById(
       "matrixCanvas"
     );
-
   const matrixClose =
     document.getElementById(
       "matrixClose"
     );
-
   let matrixRaf = 0;
-
   function startMatrix() {
     if (
       !matrixLayer ||
@@ -762,36 +651,28 @@
     ) {
       return;
     }
-
     cancelAnimationFrame(
       matrixRaf
     );
-
     matrixLayer
       .classList.add(
         "active"
       );
-
     document.body
       .classList.add(
         "matrix-open"
       );
-
     const ctx =
       matrixCanvas
         .getContext("2d");
-
     if (!ctx) return;
-
     const fontSize =
       window.innerWidth <
       600
         ? 12
         : 15;
-
     let columns = 0;
     let drops = [];
-
     const resizeMatrix =
       () => {
         const dpr =
@@ -800,25 +681,18 @@
               1,
             2
           );
-
         const width =
           window.innerWidth;
-
         const height =
           window.innerHeight;
-
         matrixCanvas.width =
           width * dpr;
-
         matrixCanvas.height =
           height * dpr;
-
         matrixCanvas.style.width =
           `${width}px`;
-
         matrixCanvas.style.height =
           `${height}px`;
-
         ctx.setTransform(
           dpr,
           0,
@@ -827,46 +701,35 @@
           0,
           0
         );
-
         columns =
           Math.ceil(
             width /
               fontSize
           );
-
         drops =
           Array(columns)
             .fill(1);
       };
-
     resizeMatrix();
-
     const chars =
       "01JB<>/{}[]#@$%&*+=TECHSYSTEM";
-
     const draw = () => {
       const width =
         window.innerWidth;
-
       const height =
         window.innerHeight;
-
       ctx.fillStyle =
         "rgba(2, 6, 23, .08)";
-
       ctx.fillRect(
         0,
         0,
         width,
         height
       );
-
       ctx.fillStyle =
         "rgba(103,232,249,.75)";
-
       ctx.font =
         `${fontSize}px IBM Plex Mono, monospace`;
-
       for (
         let i = 0;
         i < drops.length;
@@ -879,14 +742,12 @@
                 chars.length
             )
           ];
-
         ctx.fillText(
           char,
           i * fontSize,
           drops[i] *
             fontSize
         );
-
         if (
           drops[i] *
             fontSize >
@@ -896,55 +757,44 @@
         ) {
           drops[i] = 0;
         }
-
         drops[i]++;
       }
-
       matrixRaf =
         requestAnimationFrame(
           draw
         );
     };
-
     draw();
   }
-
   function stopMatrix() {
     cancelAnimationFrame(
       matrixRaf
     );
-
     matrixLayer
       ?.classList.remove(
         "active"
       );
-
     document.body
       .classList.remove(
         "matrix-open"
       );
   }
-
   window.addEventListener(
     "tech:matrix",
     () => {
       window.TechSound
         ?.matrix?.();
-
       startMatrix();
     }
   );
-
   matrixClose
     ?.addEventListener(
       "click",
       stopMatrix
     );
-
   // ============================================================
   // ESCAPE HANDLING
   // ============================================================
-
   document.addEventListener(
     "keydown",
     (e) => {
@@ -953,7 +803,6 @@
       ) {
         return;
       }
-
       if (
         matrixLayer
           ?.classList
@@ -964,14 +813,12 @@
         stopMatrix();
         return;
       }
-
       if (
         modal?.open
       ) {
         closeModal();
         return;
       }
-
       if (
         mobileMenu
           ?.classList
