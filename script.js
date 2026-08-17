@@ -593,9 +593,11 @@ if (
     }
   );
 }
+
 // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 // Gravity
 // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
 function triggerGravity() {
   const activePage = document.querySelector(".page.is-active");
   if (!activePage) return;
@@ -666,6 +668,7 @@ gravityBtn.addEventListener("click", (e) => {
   resetGravity();   // clears previous fall
   triggerGravity(); // starts gravity
 });
+
 // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 // MUSIC
 // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
@@ -740,6 +743,7 @@ musicToggle.addEventListener("click", async (e) => {
     window.TechProfileActivation?.start?.();
   });
 })();
+
   // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
   // EASTER EGG — CLICK TO REVEAL SECRET
   // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
@@ -839,6 +843,7 @@ musicToggle.addEventListener("click", async (e) => {
     }
   );
 })();
+
 // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 // PARTNER COIN BOX EASTER EGG
 // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
@@ -1438,4 +1443,30 @@ musicToggle.addEventListener("click", async (e) => {
       }
     }
   );
+})();
+
+
+// ============================================================
+// GITHUB PAGES → CLOUDFLARE REDIRECT
+// ============================================================
+
+(() => {
+  if (
+    window.location.hostname === "jbo11.github.io" &&
+    window.location.pathname.startsWith("/JBo/")
+  ) {
+    const newPath =
+      window.location.pathname.replace(
+        /^\/JBo/,
+        ""
+      );
+
+    const destination =
+      "https://jbbo.pages.dev" +
+      newPath +
+      window.location.search +
+      window.location.hash;
+
+    window.location.replace(destination);
+  }
 })();
