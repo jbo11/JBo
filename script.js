@@ -487,27 +487,16 @@
     fp.style.transition = '';
   }, 50);
 })();
+
 // ============================================================
 // ACCENT COLOR PICKER
 // ============================================================
-const DEFAULT_ACCENT =
-  '#f4ca30';
-const settingsBtn =
-  document.getElementById(
-    'settingsBtn'
-  );
-const modal =
-  document.getElementById(
-    'settingsModal'
-  );
-const accentPicker =
-  document.getElementById(
-    'accentPicker'
-  );
-const resetBtn =
-  document.getElementById(
-    'resetAccent'
-  );
+const DEFAULT_ACCENT = '#f4ca30';
+const settingsBtn = document.getElementById( 'settingsBtn' );
+const modal = document.getElementById( 'settingsModal' );
+const accentPicker = document.getElementById( 'accentPicker' );
+const resetBtn = document.getElementById( 'resetAccent' );
+
 if (
   settingsBtn &&
   modal &&
@@ -600,16 +589,7 @@ if (
   document.addEventListener(
     'keydown',
     (e) => {
-      if (
-        e.key === 'Escape'
-      ) {
-        modal.classList.add(
-          'hidden'
-        );
-        settingsBtn.classList.remove(
-          'active'
-        );
-      }
+      if ( e.key === 'Escape' ) { modal.classList.add( 'hidden' ); settingsBtn.classList.remove( 'active' ); }
     }
   );
 }

@@ -347,6 +347,7 @@ body.dark-header .site-footer{color:var(--dark)}
 #easterEgg:hover .easter-tooltip { opacity: 1; visibility: visible; transform: translateY(0); }
 #easterEgg.secret-revealed .easter-tooltip { opacity: 1; visibility: visible; transform: translateY(0); color: #fff; }
 .easter-tooltip strong { color: #fff; font-weight: 800; }
+
 /* ============================================================
    PARTNER COIN BOX EASTER EGG
    ============================================================ */
@@ -392,6 +393,7 @@ body.dark-header .site-footer{color:var(--dark)}
 .partner.partner-block-used .partner-game-box.bump { animation: none; }
 @media (max-width: 900px) { .partner-game-box { width: 120px !important; height: 120px !important; left: 0; top: 0; margin: 0 !important; } .partner-coin { width: 36px !important; height: 44px !important; top: 0; } }
 @media (prefers-reduced-motion: reduce) { .partner-game-box.bump { animation-duration: 0.01ms; } .partner-coin { animation-duration: 0.4s; } }
+
 /* ========================================================================== 
    MOBILE POLISH — STANDARD PROFILE
    ========================================================================== */
@@ -461,6 +463,8 @@ body.dark-header .site-footer{color:var(--dark)}
   .partners-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 30px; }
   .partner { width: 120px; height: 120px; margin: 0 auto; border: 1px solid rgba(255,255,255,.06); display: flex; align-items: center; justify-content: center;}
   .partner img { max-width: 64px; max-height: 58px; }
+  .partner-game-box.bump { animation: partnerBlockBump 0.18s ease-out; }
+  @keyframes partnerBlockBump { 0% { transform: translateY(0); } 40% { transform: translateY(-12px); } 70% { transform: translateY(-4px); } 100% { transform: translateY(0); } }
   /* Testimonials */
   .testimonials { gap: 16px; margin-top: 28px; }
   .testimonial { padding: 26px 22px; border-radius: 12px; }
