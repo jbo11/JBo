@@ -715,3 +715,374 @@ button {
     transition: none !important;
   }
 }
+
+/* ==================================================================================================================================================================================== */
+
+/* ============================================================
+   INTERACTIVE GALLERY MODAL
+============================================================ */
+
+.gallery-modal {
+  position: fixed;
+  inset: 0;
+
+  z-index: 99999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transition:
+    opacity 0.35s ease,
+    visibility 0.35s ease;
+}
+
+
+/* OPEN STATE */
+
+.gallery-modal.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+
+/* DARK BACKGROUND */
+
+.gallery-modal-backdrop {
+  position: absolute;
+  inset: 0;
+
+  background: rgba(0, 0, 0, 0.82);
+
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+
+/* ============================================================
+   POPUP WINDOW
+============================================================ */
+
+.gallery-modal-dialog {
+  position: relative;
+
+  z-index: 2;
+
+  width: 80vw;
+  height: 80vh;
+
+  max-width: 1600px;
+
+  overflow: hidden;
+
+  background: #1a1a1a;
+
+  border: 3px solid rgba(133, 133, 133, 0.25);
+
+  border-radius: 8px;
+
+  box-shadow:
+    0 30px 100px rgba(0, 0, 0, 0.65);
+}
+
+
+/* ============================================================
+   GALLERY
+============================================================ */
+
+.interactive-gallery {
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+
+  overflow: hidden;
+
+  background: #1a1a1a;
+
+  color: #33def4;
+
+  font-family: "Montserrat", sans-serif;
+
+  isolation: isolate;
+}
+
+
+/* ============================================================
+   CANVAS
+============================================================ */
+
+.gallery-canvas {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  z-index: 1;
+}
+
+
+.gallery-canvas canvas {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+}
+
+
+/* ============================================================
+   GALLERY HEADING
+============================================================ */
+
+.gallery-heading {
+  position: absolute;
+
+  top: 35px;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  z-index: 5;
+
+  width: calc(100% - 120px);
+
+  text-align: center;
+
+  pointer-events: none;
+}
+
+
+.gallery-heading > span {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: var(--accent);
+
+  font-size: 11px;
+  font-weight: 700;
+
+  letter-spacing: 0.25em;
+}
+
+
+.gallery-heading h2 {
+  margin: 0 0 8px;
+
+  color: #33def4;
+
+  font-size: clamp(28px, 4vw, 52px);
+}
+
+
+.gallery-heading p {
+  margin: 0;
+
+  color: rgba(255, 255, 255, 0.65);
+
+  font-size: 12px;
+}
+
+
+/* ============================================================
+   CLOSE BUTTON
+============================================================ */
+
+.gallery-modal-close {
+  position: absolute;
+
+  top: 18px;
+  right: 20px;
+
+  z-index: 100;
+
+  width: 44px;
+  height: 44px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border-radius: 50%;
+
+  color: #ffffff;
+
+  font-size: 30px;
+  font-weight: 300;
+  line-height: 1;
+
+  cursor: pointer;
+
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+
+.gallery-modal-close:hover {
+  background: var(--accent);
+
+  border-color: var(--accent);
+
+  transform: rotate(90deg);
+}
+
+
+/* ============================================================
+   LOADER
+============================================================ */
+
+.gallery-loading {
+  position: absolute;
+  inset: 0;
+
+  z-index: 50;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: #1a1a1a;
+
+  color: var(--accent);
+
+  opacity: 1;
+  visibility: visible;
+
+  transition:
+    opacity 0.8s 0.8s cubic-bezier(0.755, 0.05, 0.855, 0.06),
+    visibility 0.8s 0.8s cubic-bezier(0.755, 0.05, 0.855, 0.06);
+}
+
+
+.gallery-loading.loaded {
+  opacity: 0;
+
+  visibility: hidden;
+
+  pointer-events: none;
+}
+
+
+.gallery-loading-container {
+  position: relative;
+
+  width: min(420px, 60%);
+
+  overflow: hidden;
+}
+
+
+.gallery-counter {
+  margin: 0;
+
+  padding: 0.8rem;
+
+  text-align: center;
+
+  font-size: 14px;
+
+  letter-spacing: 0.1em;
+}
+
+
+.gallery-line {
+  position: absolute;
+
+  left: 0;
+  bottom: 0;
+
+  width: 0;
+  height: 2px;
+
+  background: var(--accent);
+}
+
+
+/* ============================================================
+   MOBILE
+============================================================ */
+
+@media (max-width: 768px) {
+
+  .gallery-modal {
+    padding: 10px;
+  }
+
+
+  .gallery-modal-dialog {
+    width: 95vw;
+    height: 85vh;
+
+    border-radius: 5px;
+  }
+
+
+  .gallery-heading {
+    top: 25px;
+
+    width: calc(100% - 100px);
+  }
+
+
+  .gallery-heading h2 {
+    font-size: 26px;
+  }
+
+
+  .gallery-heading p {
+    display: none;
+  }
+
+
+  .gallery-modal-close {
+    top: 12px;
+    right: 12px;
+
+    width: 38px;
+    height: 38px;
+
+    font-size: 26px;
+  }
+
+}
+
+/* ============================================================
+   LIVE ANIMATED GIF PREVIEW
+============================================================ */
+
+.gallery-live-gif {
+  position: absolute;
+  inset: 0;
+
+  z-index: 10;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+  object-position: center center;
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  transition: opacity 0.18s ease;
+
+  display: none;
+}
+
+.gallery-live-gif.is-visible {
+  opacity: 1;
+}

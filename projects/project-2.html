@@ -1,33 +1,194 @@
 <!-- Project 2 -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>Graphic Designs | JB Bo</title>
-  <!-- USE SAME CSS -->
+
   <link rel="stylesheet" href="project.css" />
 </head>
+
 <body>
-<a href="../index.html#page3" class="back" onclick="sessionStorage.setItem('targetPage','page3')"> ← Back to Projects </a>
-<!-- FULLPAGE WRAPPER -->
-<main id="fullpage-works">
-  <!-- SECTION 1: GALLERY -->
-  <section class="page page-gallery is-active" id="graphicDesignsSection1">
-    <div class="container">
+
+  <!-- BACK -->
+  <a
+    href="../index.html#page3"
+    class="back"
+    onclick="sessionStorage.setItem('targetPage','page3')"
+  >
+    ← Back to Projects
+  </a>
+
+
+  <!-- ==================================================
+       PROJECT PAGE
+  =================================================== -->
+
+  <main id="fullpage-works">
+
+    <section
+      class="page page-gallery is-active"
+      id="graphicDesignsSection1"
+    >
+
+      <div class="container">
+
         <p class="eyebrow center">
-        <span>GRAPHIC DESIGNS</span><br>
-        Strategic design solutions tailored to business goals
+          <span>GRAPHIC DESIGNS</span><br>
+          Strategic design solutions tailored to business goals
         </p>
+
+
         <div class="works-grid">
-        <a class="work" href="https://sites.google.com/view/jbbo/graphic-design?authuser=0">
-            <div class="work-img" style="background-image:url('https://images.pexels.com/photos/2576194/pexels-photo-2576194.jpeg?_gl=1*inkspq*_ga*MjA3NjM4MDg3OS4xNzc3NTY2NjI2*_ga_8JE65Q40S6*czE3Nzc1NjY2MjYkbzEkZzEkdDE3Nzc1NjgwNTkkajE2JGwwJGgw')"></div>
-            <div class="work-info"><h4>Graphic Designs</h4><span>Photoshop · Illustrator · In-Design · Canva</span></div>
-        </a>
+
+          <!-- ==================================================
+               GRAPHIC DESIGN CARD
+               CLICKING THIS OPENS THE INTERACTIVE GALLERY
+          =================================================== -->
+
+          <a
+            class="work"
+            id="openGraphicGallery"
+            href="#graphicDesignGallery"
+          >
+
+            <div
+              class="work-img"
+              style="
+                background-image:
+                url('https://images.pexels.com/photos/2576194/pexels-photo-2576194.jpeg');
+              "
+            ></div>
+
+            <div class="work-info">
+
+              <h4>
+                Graphic Designs
+              </h4>
+
+              <span>
+                Photoshop · Illustrator · In-Design · Canva
+              </span>
+
+            </div>
+
+          </a>
+
         </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+
+  <!-- ==================================================
+       INTERACTIVE GALLERY MODAL
+       HIDDEN UNTIL GRAPHIC DESIGN CARD IS CLICKED
+  =================================================== -->
+
+  <div
+    class="gallery-modal"
+    id="graphicDesignGallery"
+    aria-hidden="true"
+  >
+
+    <!-- Dark background -->
+    <div class="gallery-modal-backdrop"></div>
+
+
+    <!-- POPUP -->
+    <div
+      class="gallery-modal-dialog"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Graphic Designs Gallery"
+    >
+
+
+      <!-- CLOSE BUTTON -->
+      <button
+        type="button"
+        class="gallery-modal-close"
+        id="closeGraphicGallery"
+        aria-label="Close gallery"
+      >
+        ×
+      </button>
+
+
+
+      <!-- ==================================================
+           INTERACTIVE GALLERY
+      =================================================== -->
+
+      <section
+        class="interactive-gallery"
+        id="image-gallery"
+      >
+
+
+        <!-- LOADING SCREEN -->
+
+        <div class="gallery-loading">
+
+          <div class="gallery-loading-container">
+
+            <p class="gallery-counter">
+              0%
+            </p>
+
+            <div class="gallery-line"></div>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- GALLERY TITLE 
+
+        <div class="gallery-heading">
+
+          <span>
+            GRAPHIC DESIGNS
+          </span>
+
+          <h2>
+            Explore My Work
+          </h2>
+
+          <p>
+            Move your mouse or scroll to explore.
+            Click an image to enlarge.
+          </p>
+
+        </div> -->
+
+
+
+        <!-- JS INSERTS CANVAS HERE -->
+
+        <div class="gallery-canvas"></div>
+
+
+      </section>
+
+
     </div>
-  </section>
-</main>
-<script src="project.js"></script>
+
+  </div>
+
+
+  <!-- PROJECT JS -->
+
+  <script src="project.js"></script>
+
 </body>
+
 </html>
