@@ -3030,8 +3030,11 @@ setupShapes() {
       ) {
         this.ctx.save();
 
-        this.ctx.strokeStyle =
-          "#FE296D";
+        const accentColor = getComputedStyle(
+  document.documentElement
+).getPropertyValue("--accent").trim();
+
+this.ctx.strokeStyle = accentColor;
 
         this.ctx.lineWidth = 1;
 
