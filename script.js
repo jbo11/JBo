@@ -441,7 +441,8 @@
   if (form) {
     form.addEventListener(
       'submit',
-      () => {
+      async (e) => {
+        e.preventDefault();
         const pageUrl =
           form.querySelector(
             "input[name='_url']"
@@ -455,11 +456,46 @@
             'button'
           );
         if (!btn) return;
-        btn.dataset.originalText =
+        const original =
+          btn.dataset.originalText ||
           btn.innerHTML;
+        btn.dataset.originalText =
+          original;
         btn.innerHTML =
           'Sending <i class="fas fa-arrow-right"></i>';
         btn.disabled = true;
+
+        try {
+          const response = await fetch(
+            form.action,
+            {
+              method: 'POST',
+              body: new FormData(form),
+              headers: {
+                Accept: 'application/json'
+              }
+            }
+          );
+
+          if (!response.ok) {
+            throw new Error(
+              'Contact form failed'
+            );
+          }
+
+          form.reset();
+          btn.innerHTML =
+            'SENT <i class="fas fa-check"></i>';
+          setTimeout(() => {
+            btn.innerHTML =
+              original;
+            btn.disabled = false;
+          }, 5000);
+        } catch (error) {
+          btn.innerHTML =
+            'Try Again <i class="fas fa-arrow-right"></i>';
+          btn.disabled = false;
+        }
       }
     );
   }
