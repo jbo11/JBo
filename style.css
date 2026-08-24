@@ -167,6 +167,9 @@ body.dark-header .site-footer{color:var(--dark)}
 .contact-form input:focus,.contact-form textarea:focus{border-color:var(--accent)}
 .contact-form textarea{resize:none; color: #fff}
 .contact-form button{ margin-top:10px;padding:14px 32px;background:var(--accent);color:var(--light);font-weight:600; font-size:12px;letter-spacing:3px;text-transform:uppercase;display:inline-flex;align-items:center;gap:10px; transition:.3s; }
+.contact-form button:disabled{ cursor:wait; opacity:.92; }
+.button-loader{ width:14px;height:14px;border:2px solid rgba(255,255,255,.45);border-top-color:#fff;border-radius:50%;display:inline-block;animation:buttonSpin .8s linear infinite; }
+@keyframes buttonSpin{ to{ transform:rotate(360deg); } }
 .contact-form button:hover{background:var(--dark);color:#fff}
 
 /* ============= OVERLAY MENU ============= */

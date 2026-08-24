@@ -462,27 +462,48 @@
         btn.dataset.originalText =
           original;
         btn.innerHTML =
-          'Sending <i class="fas fa-arrow-right"></i>';
+          'Sending <span class="button-loader" aria-hidden="true"></span>';
         btn.disabled = true;
 
         try {
+          const payload =
+            Object.fromEntries(
+              new FormData(form)
+            );
+          payload._replyto =
+            payload.email || '';
+          const loadingDelay =
+            new Promise((resolve) => {
+              setTimeout(resolve, 3000);
+            });
           const response = await fetch(
             form.action,
             {
               method: 'POST',
-              body: new FormData(form),
+              body: JSON.stringify(
+                payload
+              ),
               headers: {
+                'Content-Type':
+                  'application/json',
                 Accept: 'application/json'
               }
             }
           );
+          const data =
+            await response.json();
 
-          if (!response.ok) {
+          if (
+            !response.ok ||
+            data.success === false
+          ) {
             throw new Error(
+              data.message ||
               'Contact form failed'
             );
           }
 
+          await loadingDelay;
           form.reset();
           btn.innerHTML =
             'SENT <i class="fas fa-check"></i>';
@@ -490,7 +511,7 @@
             btn.innerHTML =
               original;
             btn.disabled = false;
-          }, 5000);
+          }, 3000);
         } catch (error) {
           btn.innerHTML =
             'Try Again <i class="fas fa-arrow-right"></i>';
