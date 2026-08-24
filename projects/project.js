@@ -28,6 +28,7 @@
     null;
   let touchStartY =
     null;
+
   // ============================================================
   // HELPERS
   // ============================================================
@@ -53,6 +54,7 @@
       }
     );
   }
+
   // ============================================================
   // SET ACTIVE PAGE
   // ============================================================
@@ -66,6 +68,7 @@
     current =
       clampIndex(index);
     updateClasses();
+
     // ========================================================
     // DESKTOP
     // ========================================================
@@ -81,6 +84,7 @@
         )`;
       return;
     }
+
     // ========================================================
     // MOBILE
     // ========================================================
@@ -98,6 +102,7 @@
         });
     }
   }
+
   // ============================================================
   // DESKTOP WHEEL
   // ============================================================
@@ -168,6 +173,7 @@
       passive: false
     }
   );
+
   // ============================================================
   // DESKTOP KEYBOARD
   // ============================================================
@@ -189,7 +195,7 @@
         return;
       }
       switch (
-        event.key
+      event.key
       ) {
         case "ArrowDown":
         case "PageDown":
@@ -219,6 +225,7 @@
       }
     }
   );
+
   // ============================================================
   // GALLERY ARROWS
   // ============================================================
@@ -264,9 +271,9 @@
           (event) => {
             if (
               event.key ===
-                "Enter" ||
+              "Enter" ||
               event.key ===
-                " "
+              " "
             ) {
               event.preventDefault();
               activate();
@@ -312,9 +319,9 @@
           (event) => {
             if (
               event.key ===
-                "Enter" ||
+              "Enter" ||
               event.key ===
-                " "
+              " "
             ) {
               event.preventDefault();
               activate();
@@ -323,6 +330,7 @@
         );
       }
     );
+
   // ============================================================
   // TOUCH SWIPE
   //
@@ -331,6 +339,7 @@
   //
   // Mobile gets natural scrolling.
   // ============================================================
+
   window.addEventListener(
     "touchstart",
     (event) => {
@@ -385,12 +394,14 @@
       passive: true
     }
   );
+
   // ============================================================
   // MOBILE SCROLL TRACKING
   //
   // Keeps "current" accurate when
   // the visitor manually scrolls.
   // ============================================================
+
   if (
     "IntersectionObserver"
     in window
@@ -437,6 +448,7 @@
       }
     );
   }
+
   // ============================================================
   // RESPONSIVE MODE SWITCH
   // ============================================================
@@ -485,6 +497,7 @@
         syncMode
       );
   }
+
   // ============================================================
   // RESIZE
   // ============================================================
@@ -517,12 +530,14 @@
         );
     }
   );
+
   // ============================================================
   // INITIALIZE
   // ============================================================
   updateClasses();
   syncMode();
 })();
+
 // ============================================================
 // LOAD SAVED ACCENT COLOR
 // ============================================================
@@ -1048,10 +1063,10 @@ class DrawMainImage {
         const scale =
           Math.min(
             maxWidth /
-              naturalWidth,
+            naturalWidth,
 
             maxHeight /
-              naturalHeight
+            naturalHeight
           );
 
 
@@ -1321,7 +1336,7 @@ class DrawMainImage {
 
       if (
         preHeight +
-          addHeight >
+        addHeight >
         this.canvas.height
       ) {
 
@@ -1367,11 +1382,11 @@ class DrawMainImage {
           width:
 
             Math.random() *
-              this.width *
-              0.5 -
+            this.width *
+            0.5 -
 
             this.width *
-              0.25
+            0.25
 
         });
 
@@ -1582,7 +1597,7 @@ class DrawMainImage {
       Math.min(
 
         this.stopWatch.getElapsedTime() *
-          0.0002,
+        0.0002,
 
         1
 
@@ -1683,7 +1698,7 @@ class DrawMainImage {
           t * 0.01 +
 
           item.height /
-            Math.PI
+          Math.PI
 
         ) *
 
@@ -1993,7 +2008,7 @@ class Glitch {
 
       if (
         preHeight +
-          addHeight >
+        addHeight >
         this.height
       ) {
         addHeight =
@@ -2054,26 +2069,26 @@ class Glitch {
             item.height * 0.1 +
             t
           ) *
-            10 *
-            Math.random(),
+          10 *
+          Math.random(),
 
           item.height
         );
       } else {
         const randomItem =
           this.dataArr[
-            Math.floor(
-              this.dataArr.length *
-                Math.random()
-            )
+          Math.floor(
+            this.dataArr.length *
+            Math.random()
+          )
           ];
 
         this.ctx.putImageData(
           randomItem.image,
 
           this.width *
-            Math.random() -
-            this.width / 2,
+          Math.random() -
+          this.width / 2,
 
           item.height
         );
@@ -2361,11 +2376,11 @@ class Sketch {
     if (
       Math.abs(
         newWidth -
-          this.preWidth
+        this.preWidth
       ) < 2 &&
       Math.abs(
         newHeight -
-          this.preHeight
+        this.preHeight
       ) < 2
     ) {
       return;
@@ -2597,252 +2612,252 @@ class Sketch {
      SHAPES
      ======================================================== */
 
-setupShapes() {
+  setupShapes() {
 
-  const edge =
-    Math.max(
-      this.width,
-      this.height
-    );
-
-
-  this.radius =
-    edge / 2;
-
-
-  this.numberOfShape =
-    16;
-
-
-  this.size =
-
-    this.radius /
-
-    (
-      this.numberOfShape /
-      6
-    );
-
-
-  this.shapes = [];
-
-
-  /*
-   * Track where each image has already
-   * been positioned.
-   */
-
-  const placements = [];
-
-
-  /*
-   * Track how often each image has been used.
-   *
-   * This keeps all 59 images distributed
-   * fairly evenly.
-   */
-
-  const usage =
-    new Map();
-
-
-  this.paths.forEach(
-    (path) => {
-
-      usage.set(
-        path,
-        0
+    const edge =
+      Math.max(
+        this.width,
+        this.height
       );
 
-    }
-  );
+
+    this.radius =
+      edge / 2;
 
 
-  /*
-   * Minimum separation.
-   *
-   * 3 means an identical file cannot be
-   * placed within roughly three grid positions
-   * of itself.
-   *
-   * Increase to 4 if you want even more space.
-   */
-
-  const minimumSeparation =
-    3;
+    this.numberOfShape =
+      16;
 
 
-  /*
-   * Because the gallery wraps around like
-   * a sphere, position 0 and position 15
-   * should be considered neighbors.
-   */
+    this.size =
 
-  const circularDistance =
-    (
-      a,
-      b
-    ) => {
+      this.radius /
 
-      const difference =
-        Math.abs(
-          a - b
+      (
+        this.numberOfShape /
+        6
+      );
+
+
+    this.shapes = [];
+
+
+    /*
+     * Track where each image has already
+     * been positioned.
+     */
+
+    const placements = [];
+
+
+    /*
+     * Track how often each image has been used.
+     *
+     * This keeps all 59 images distributed
+     * fairly evenly.
+     */
+
+    const usage =
+      new Map();
+
+
+    this.paths.forEach(
+      (path) => {
+
+        usage.set(
+          path,
+          0
         );
 
+      }
+    );
 
-      return Math.min(
 
-        difference,
+    /*
+     * Minimum separation.
+     *
+     * 3 means an identical file cannot be
+     * placed within roughly three grid positions
+     * of itself.
+     *
+     * Increase to 4 if you want even more space.
+     */
 
-        this.numberOfShape -
+    const minimumSeparation =
+      3;
+
+
+    /*
+     * Because the gallery wraps around like
+     * a sphere, position 0 and position 15
+     * should be considered neighbors.
+     */
+
+    const circularDistance =
+      (
+        a,
+        b
+      ) => {
+
+        const difference =
+          Math.abs(
+            a - b
+          );
+
+
+        return Math.min(
+
+          difference,
+
+          this.numberOfShape -
           difference
 
-      );
+        );
 
-    };
-
-
-
-  /* ======================================================
-     CHOOSE IMAGE
-  ====================================================== */
-
-  const chooseImage =
-    (
-      x,
-      y
-    ) => {
+      };
 
 
-      /*
-       * Remove any image already used close
-       * to this position.
-       */
 
-      let candidates =
+    /* ======================================================
+       CHOOSE IMAGE
+    ====================================================== */
 
-        this.paths.filter(
-
-          (path) => {
-
-
-            return !placements.some(
-
-              (placement) => {
+    const chooseImage =
+      (
+        x,
+        y
+      ) => {
 
 
-                if (
-                  placement.path !==
-                  path
-                ) {
+        /*
+         * Remove any image already used close
+         * to this position.
+         */
 
-                  return false;
+        let candidates =
+
+          this.paths.filter(
+
+            (path) => {
+
+
+              return !placements.some(
+
+                (placement) => {
+
+
+                  if (
+                    placement.path !==
+                    path
+                  ) {
+
+                    return false;
+
+                  }
+
+
+                  const dx =
+                    circularDistance(
+                      x,
+                      placement.x
+                    );
+
+
+                  const dy =
+                    circularDistance(
+                      y,
+                      placement.y
+                    );
+
+
+                  /*
+                   * Same image cannot be inside
+                   * this neighborhood.
+                   */
+
+                  return (
+
+                    dx <=
+                    minimumSeparation &&
+
+                    dy <=
+                    minimumSeparation
+
+                  );
 
                 }
 
+              );
 
-                const dx =
-                  circularDistance(
-                    x,
-                    placement.x
-                  );
+            }
 
-
-                const dy =
-                  circularDistance(
-                    y,
-                    placement.y
-                  );
+          );
 
 
-                /*
-                 * Same image cannot be inside
-                 * this neighborhood.
-                 */
+        /*
+         * Emergency fallback.
+         *
+         * Normally with 59 images this should
+         * almost never be needed.
+         */
 
-                return (
+        if (
+          !candidates.length
+        ) {
 
-                  dx <=
-                    minimumSeparation &&
+          candidates =
+            [...this.paths];
 
-                  dy <=
-                    minimumSeparation
-
-                );
-
-              }
-
-            );
-
-          }
-
-        );
+        }
 
 
-      /*
-       * Emergency fallback.
-       *
-       * Normally with 59 images this should
-       * almost never be needed.
-       */
 
-      if (
-        !candidates.length
-      ) {
+        /*
+         * Find the images that have been used
+         * the least.
+         */
+
+        const minimumUsage =
+          Math.min(
+
+            ...candidates.map(
+
+              (path) =>
+                usage.get(path) || 0
+
+            )
+
+          );
+
+
+        /*
+         * Only choose among the least-used
+         * images.
+         */
 
         candidates =
-          [...this.paths];
 
-      }
-
-
-
-      /*
-       * Find the images that have been used
-       * the least.
-       */
-
-      const minimumUsage =
-        Math.min(
-
-          ...candidates.map(
+          candidates.filter(
 
             (path) =>
-              usage.get(path) || 0
 
-          )
+              (
+                usage.get(path) ||
+                0
+              ) ===
+              minimumUsage
 
-        );
-
-
-      /*
-       * Only choose among the least-used
-       * images.
-       */
-
-      candidates =
-
-        candidates.filter(
-
-          (path) =>
-
-            (
-              usage.get(path) ||
-              0
-            ) ===
-            minimumUsage
-
-        );
+          );
 
 
 
-      /*
-       * Randomly choose one of those.
-       */
+        /*
+         * Randomly choose one of those.
+         */
 
-      const selected =
+        const selected =
 
-        candidates[
+          candidates[
 
           Math.floor(
 
@@ -2851,114 +2866,114 @@ setupShapes() {
 
           )
 
-        ];
+          ];
 
 
 
-      /*
-       * Record usage.
-       */
+        /*
+         * Record usage.
+         */
 
-      usage.set(
+        usage.set(
 
-        selected,
+          selected,
 
-        (
-          usage.get(
-            selected
-          ) || 0
-        ) + 1
+          (
+            usage.get(
+              selected
+            ) || 0
+          ) + 1
 
-      );
-
-
-      placements.push({
-
-        x: x,
-
-        y: y,
-
-        path:
-          selected
-
-      });
-
-
-      return selected;
-
-    };
-
-
-
-  /* ======================================================
-     CREATE SHAPES
-  ====================================================== */
-
-  let index =
-    0;
-
-
-  for (
-    let x = 0;
-    x < this.numberOfShape;
-    x++
-  ) {
-
-
-    for (
-      let y = 0;
-      y < this.numberOfShape;
-      y++
-    ) {
-
-
-      const selectedImage =
-        chooseImage(
-          x,
-          y
         );
 
 
-      const params = {
+        placements.push({
 
-        x: x,
+          x: x,
 
-        y: y,
+          y: y,
 
-        i:
-          index++,
+          path:
+            selected
 
-        c:
-          this.ctx,
+        });
 
-        s:
-          this.size,
 
-        r:
-          this.radius,
-
-        n:
-          this.numberOfShape,
-
-        p:
-          selectedImage
+        return selected;
 
       };
 
 
-      this.shapes.push(
 
-        new Shape(
-          params
-        )
+    /* ======================================================
+       CREATE SHAPES
+    ====================================================== */
 
-      );
+    let index =
+      0;
+
+
+    for (
+      let x = 0;
+      x < this.numberOfShape;
+      x++
+    ) {
+
+
+      for (
+        let y = 0;
+        y < this.numberOfShape;
+        y++
+      ) {
+
+
+        const selectedImage =
+          chooseImage(
+            x,
+            y
+          );
+
+
+        const params = {
+
+          x: x,
+
+          y: y,
+
+          i:
+            index++,
+
+          c:
+            this.ctx,
+
+          s:
+            this.size,
+
+          r:
+            this.radius,
+
+          n:
+            this.numberOfShape,
+
+          p:
+            selectedImage
+
+        };
+
+
+        this.shapes.push(
+
+          new Shape(
+            params
+          )
+
+        );
+
+      }
 
     }
 
   }
-
-}
 
   /* ========================================================
      HOVER DETECTION
@@ -2984,13 +2999,13 @@ setupShapes() {
 
     return (
       x >
-        shape.x - half &&
+      shape.x - half &&
       x <
-        shape.x + half &&
+      shape.x + half &&
       y >
-        shape.y - half &&
+      shape.y - half &&
       y <
-        shape.y + half
+      shape.y + half
     );
   }
 
@@ -3031,19 +3046,19 @@ setupShapes() {
         this.ctx.save();
 
         const accentColor = getComputedStyle(
-  document.documentElement
-).getPropertyValue("--accent").trim();
+          document.documentElement
+        ).getPropertyValue("--accent").trim();
 
-this.ctx.strokeStyle = accentColor;
+        this.ctx.strokeStyle = accentColor;
 
         this.ctx.lineWidth = 1;
 
         this.ctx.strokeRect(
           this.focus.x -
-            this.focus.s / 2,
+          this.focus.s / 2,
 
           this.focus.y -
-            this.focus.s / 2,
+          this.focus.s / 2,
 
           this.focus.s,
           this.focus.s
@@ -3077,10 +3092,10 @@ this.ctx.strokeStyle = accentColor;
     this.ctx.save();
 
     const accentColor = getComputedStyle(
-  document.documentElement
-).getPropertyValue("--accent").trim();
+      document.documentElement
+    ).getPropertyValue("--accent").trim();
 
-this.ctx.strokeStyle = accentColor;
+    this.ctx.strokeStyle = accentColor;
 
     this.ctx.lineWidth =
       Math.max(
@@ -3090,10 +3105,10 @@ this.ctx.strokeStyle = accentColor;
 
     this.ctx.strokeRect(
       this.focus.x -
-        this.focus.s / 2,
+      this.focus.s / 2,
 
       this.focus.y -
-        this.focus.s / 2,
+      this.focus.s / 2,
 
       this.focus.s,
       this.focus.s
@@ -3180,8 +3195,8 @@ this.ctx.strokeStyle = accentColor;
     this.drawFocus(
       hoveredIndex >= 0
         ? this.shapes[
-            hoveredIndex
-          ]
+        hoveredIndex
+        ]
         : null,
 
       this.hover

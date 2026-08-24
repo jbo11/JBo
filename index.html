@@ -257,19 +257,24 @@
             <h3 class="section-title">Let's start a project together.</h3>
             <ul class="contact-info">
               <li><i class="fas fa-map-marker-alt"></i>Los Angeles, CA</li>
-              <li><i class="fas fa-envelope"></i>ibo1183@gmail.com</li>
+              <li><i class="fas fa-envelope"></i>jbo11.usa@gmail.com</li>
               <li><i class="fas fa-phone"></i>+1 (626) 725-6584</li>
             </ul>
           </div>
           <div class="col">
-            <form class="contact-form" id="contactForm">
+            <form class="contact-form" id="contactForm" action="https://formsubmit.co/jbo11.usa@gmail.com" method="POST">
+              <input type="hidden" name="_subject" value="New message from JB Bo website">
+              <input type="hidden" name="_captcha" value="false">
+              <input type="hidden" name="_template" value="table">
+              <input type="hidden" name="_url" id="contactPageUrl" value="">
+              <input type="text" name="_honey" tabindex="-1" autocomplete="off" style="display:none">
               <div class="row">
-                <input type="text" placeholder="Your name" required>
-                <input type="email" placeholder="Your email" required>
+                <input type="text" name="name" placeholder="Your name" autocomplete="name" required>
+                <input type="email" name="email" placeholder="Your email" autocomplete="email" required>
               </div>
-              <input type="text" placeholder="Subject">
-              <textarea placeholder="Your message" rows="5" required></textarea>
-              <button type="submit">Post Comment <i class="fas fa-arrow-right"></i></button>
+              <input type="text" name="subject" placeholder="Subject" required>
+              <textarea name="message" placeholder="Your message" rows="5" required></textarea>
+              <button type="submit">Send Message <i class="fas fa-arrow-right"></i></button>
             </form>
           </div>
         </div>

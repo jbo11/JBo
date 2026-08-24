@@ -56,7 +56,7 @@
       "2024—2026  Associate Degree — Web Software Technology"
     ],
     contact: () => [
-      "EMAIL      ibo1183@gmail.com",
+      "EMAIL      jbo11.usa@gmail.com",
       "LINKEDIN   linkedin.com/in/jbbo/",
       "LOCATION   Los Angeles, CA"
     ],

@@ -10,6 +10,10 @@
   let isAnimating = false;
   const isMobile = () =>
     window.matchMedia('(max-width: 900px)').matches;
+  const isTypingTarget = (target) =>
+    target?.closest?.(
+      "input, textarea, select, button, [contenteditable='true']"
+    );
   // Pages with DARK backgrounds → header should stay white
   const darkPages = [
     'page1',
@@ -75,6 +79,7 @@
       );
     }
   }
+
   // ============================================================
   // DESKTOP WHEEL SCROLL
   // ============================================================
@@ -91,7 +96,7 @@
             el.scrollTop <= 0;
           const atBottom =
             el.scrollTop +
-              el.clientHeight >=
+            el.clientHeight >=
             el.scrollHeight;
           if (
             !(atTop && e.deltaY < 0) &&
@@ -167,13 +172,14 @@
       passive: false
     }
   );
+
   // ============================================================
   // DESKTOP KEYBOARD NAVIGATION
   // ============================================================
   window.addEventListener(
     'keydown',
     (e) => {
-      if (isMobile()) return;
+      if (isMobile() || isTypingTarget(e.target)) return;
       if (
         [
           'ArrowDown',
@@ -215,6 +221,7 @@
       }
     }
   );
+
   // ============================================================
   // TOUCH SWIPE — DESKTOP/TABLET FULLPAGE ONLY
   // ============================================================
@@ -267,6 +274,7 @@
       touchY = null;
     }
   );
+
   // ============================================================
   // DOT NAVIGATION
   // ============================================================
@@ -281,6 +289,7 @@
       );
     }
   );
+
   // ============================================================
   // OVERLAY MENU
   // ============================================================
@@ -359,6 +368,7 @@
       }
     }
   );
+
   // ============================================================
   // RESIZE
   // ============================================================
@@ -369,12 +379,12 @@
         fp.style.transform = '';
       } else {
         fp.style.transform =
-          `translateY(-${
-            current * 100
+          `translateY(-${current * 100
           }vh)`;
       }
     }
   );
+
   // ============================================================
   // MOBILE SCROLL SPY
   // ============================================================
@@ -394,7 +404,7 @@
           const mid =
             window.scrollY +
             window.innerHeight /
-              2;
+            2;
           let idx = 0;
           sections.forEach(
             (section, i) => {
@@ -420,6 +430,7 @@
       );
     }
   );
+
   // ============================================================
   // CONTACT FORM
   // ============================================================
@@ -430,33 +441,29 @@
   if (form) {
     form.addEventListener(
       'submit',
-      (e) => {
-        e.preventDefault();
+      () => {
+        const pageUrl =
+          form.querySelector(
+            "input[name='_url']"
+          );
+        if (pageUrl) {
+          pageUrl.value =
+            window.location.href;
+        }
         const btn =
           form.querySelector(
             'button'
           );
         if (!btn) return;
-        const original =
+        btn.dataset.originalText =
           btn.innerHTML;
         btn.innerHTML =
-          'Sent <i class="fas fa-check"></i>';
-        btn.style.background =
-          '#1d1d1d';
-        btn.style.color =
-          '#fff';
-        form.reset();
-        setTimeout(() => {
-          btn.innerHTML =
-            original;
-          btn.style.background =
-            '';
-          btn.style.color =
-            '';
-        }, 2200);
+          'Sending <i class="fas fa-arrow-right"></i>';
+        btn.disabled = true;
       }
     );
   }
+
   // ============================================================
   // INITIAL PAGE
   // ============================================================
@@ -492,10 +499,10 @@
 // ACCENT COLOR PICKER
 // ============================================================
 const DEFAULT_ACCENT = '#f4ca30';
-const settingsBtn = document.getElementById( 'settingsBtn' );
-const modal = document.getElementById( 'settingsModal' );
-const accentPicker = document.getElementById( 'accentPicker' );
-const resetBtn = document.getElementById( 'resetAccent' );
+const settingsBtn = document.getElementById('settingsBtn');
+const modal = document.getElementById('settingsModal');
+const accentPicker = document.getElementById('accentPicker');
+const resetBtn = document.getElementById('resetAccent');
 
 if (
   settingsBtn &&
@@ -589,7 +596,7 @@ if (
   document.addEventListener(
     'keydown',
     (e) => {
-      if ( e.key === 'Escape' ) { modal.classList.add( 'hidden' ); settingsBtn.classList.remove( 'active' ); }
+      if (e.key === 'Escape') { modal.classList.add('hidden'); settingsBtn.classList.remove('active'); }
     }
   );
 }
@@ -744,9 +751,9 @@ musicToggle.addEventListener("click", async (e) => {
   });
 })();
 
-  // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-  // EASTER EGG — CLICK TO REVEAL SECRET
-  // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+// EASTER EGG — CLICK TO REVEAL SECRET
+// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 (() => {
   const easterEgg =
     document.getElementById("easterEgg");
@@ -771,6 +778,7 @@ musicToggle.addEventListener("click", async (e) => {
   `;
   let audio = null;
   let activated = false;
+
   // ==========================================================
   // CLICK EGG
   // ==========================================================
@@ -789,6 +797,7 @@ musicToggle.addEventListener("click", async (e) => {
     );
     tooltip.textContent =
       normalMessage;
+
     // ========================================================
     // PLAY SECRET AUDIO
     // ========================================================
@@ -796,6 +805,7 @@ musicToggle.addEventListener("click", async (e) => {
       "public/sounds/contra.mp3"
     );
     audio.volume = 0.6;
+
     // ========================================================
     // AUDIO FINISHED
     // ========================================================
@@ -826,6 +836,7 @@ musicToggle.addEventListener("click", async (e) => {
       activated = false;
     });
   });
+
   // ==========================================================
   // MOUSE LEAVES EGG
   // ==========================================================
@@ -855,6 +866,7 @@ musicToggle.addEventListener("click", async (e) => {
   const MAX_COINS = 10;
   const USED_BLOCK_DURATION = 5000;
   const COIN_FRAME_SPEED = 65;
+
   // ==========================================================
   // FILE PATHS
   // ==========================================================
@@ -872,6 +884,7 @@ musicToggle.addEventListener("click", async (e) => {
     `${COINBOX_PATH}/coin-5.png`,
     `${COINBOX_PATH}/coin-6.png`
   ];
+
   // ==========================================================
   // FIND PARTNERS
   // ==========================================================
@@ -882,6 +895,7 @@ musicToggle.addEventListener("click", async (e) => {
   if (!partners.length) {
     return;
   }
+
   // ==========================================================
   // PRELOAD GAME IMAGES
   // Prevents first-time animation flicker.
@@ -898,6 +912,7 @@ musicToggle.addEventListener("click", async (e) => {
       img.src = src;
     }
   );
+
   // ==========================================================
   // SHARED RETRO SOUND ENGINE
   // ==========================================================
@@ -925,6 +940,7 @@ musicToggle.addEventListener("click", async (e) => {
       return null;
     }
   }
+
   // ==========================================================
   // COIN SOUND
   // ==========================================================
@@ -941,12 +957,13 @@ musicToggle.addEventListener("click", async (e) => {
       coinSound.currentTime = 0;
       coinSound
         .play()
-        .catch(() => {});
+        .catch(() => { });
     } catch (error) {
       // Sound is optional.
       // Game continues even if audio fails.
     }
   }
+
   // ==========================================================
   // QUESTION BLOCK ACTIVATION SOUND
   // ==========================================================
@@ -1006,6 +1023,7 @@ musicToggle.addEventListener("click", async (e) => {
       // Optional sound.
     }
   }
+
   // ==========================================================
   // EMPTY BLOCK SOUND
   // ==========================================================
@@ -1060,6 +1078,7 @@ musicToggle.addEventListener("click", async (e) => {
       // Optional sound.
     }
   }
+
   // ==========================================================
   // INITIALIZE EACH PARTNER INDIVIDUALLY
   // ==========================================================
@@ -1074,6 +1093,7 @@ musicToggle.addEventListener("click", async (e) => {
       }
       partner.dataset.coinBoxInitialized =
         "true";
+
       // ------------------------------------------------------
       // ORIGINAL PARTNER LOGO
       // ------------------------------------------------------
@@ -1099,6 +1119,7 @@ musicToggle.addEventListener("click", async (e) => {
       let blockUsed = false;
       let gameBox = null;
       let usedBlockTimer = null;
+
       // ======================================================
       // ACCESSIBILITY
       // ======================================================
@@ -1114,6 +1135,7 @@ musicToggle.addEventListener("click", async (e) => {
         "aria-label",
         partnerName
       );
+
       // ======================================================
       // NORMAL PARTNER CLICK
       // Must click logo 5 times.
@@ -1135,6 +1157,7 @@ musicToggle.addEventListener("click", async (e) => {
           }
         }
       );
+
       // ======================================================
       // KEYBOARD SUPPORT
       // ======================================================
@@ -1166,6 +1189,7 @@ musicToggle.addEventListener("click", async (e) => {
           }
         }
       );
+
       // ======================================================
       // ACTIVATE QUESTION BLOCK
       // ======================================================
@@ -1233,6 +1257,7 @@ musicToggle.addEventListener("click", async (e) => {
           }
         );
       }
+
       // ======================================================
       // RELEASE COIN
       // ======================================================
@@ -1246,6 +1271,7 @@ musicToggle.addEventListener("click", async (e) => {
           return;
         }
         coinCount++;
+
         // ----------------------------------------------------
         // BLOCK BUMP
         // ----------------------------------------------------
@@ -1288,6 +1314,7 @@ musicToggle.addEventListener("click", async (e) => {
           );
         }
       }
+
       // ======================================================
       // CREATE ROTATING COIN
       // ======================================================
@@ -1324,7 +1351,7 @@ musicToggle.addEventListener("click", async (e) => {
                 COIN_FRAMES.length;
               coin.src =
                 COIN_FRAMES[
-                  frameIndex
+                frameIndex
                 ];
             },
             COIN_FRAME_SPEED
@@ -1361,6 +1388,7 @@ musicToggle.addEventListener("click", async (e) => {
           1200
         );
       }
+
       // ======================================================
       // SWITCH TO BROWN / EMPTY BLOCK
       // ======================================================
@@ -1403,6 +1431,7 @@ musicToggle.addEventListener("click", async (e) => {
             USED_BLOCK_DURATION
           );
       }
+      
       // ======================================================
       // RESET BACK TO ORIGINAL PARTNER LOGO
       // ======================================================
