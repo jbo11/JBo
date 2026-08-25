@@ -8,6 +8,7 @@
   const overlay = document.getElementById('overlayMenu');
   let current = 0;
   let isAnimating = false;
+  let resumeTracked = false;
   const isMobile = () =>
     window.matchMedia('(max-width: 900px)').matches;
   const isTypingTarget = (target) =>
@@ -51,6 +52,21 @@
       );
     });
     const id = sections[idx].id;
+    window.JBAnalytics?.sectionView?.(
+      id
+    );
+    if (
+      id === 'page5' &&
+      !resumeTracked
+    ) {
+      resumeTracked = true;
+      window.JBAnalytics?.track?.(
+        'RESUME_VIEW',
+        {
+          section: id
+        }
+      );
+    }
     document.body.classList.toggle(
       'dark-header',
       !darkPages.includes(id)
@@ -505,6 +521,12 @@
 
           await loadingDelay;
           form.reset();
+          window.JBAnalytics?.track?.(
+            'CONTACT_FORM_SUBMIT',
+            {
+              form: 'Portfolio Contact'
+            }
+          );
           btn.innerHTML =
             'SENT <i class="fas fa-check"></i>';
           setTimeout(() => {

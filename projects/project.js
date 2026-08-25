@@ -68,6 +68,9 @@
     current =
       clampIndex(index);
     updateClasses();
+    window.JBAnalytics?.sectionView?.(
+      sections[current]?.id || ""
+    );
 
     // ========================================================
     // DESKTOP
