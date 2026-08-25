@@ -18,7 +18,7 @@
   };
 
   const PLACEHOLDER_ENDPOINT =
-    "https://script.google.com/macros/s/AKfycbxuyKTwBbM4_hS3J7MXM6a5uGnvR0ZkVKBKxosgl3nOPxR_1EApdoeaBXRhQ7rh9O3iyA/exec";
+    "PASTE_GOOGLE_APPS_SCRIPT_EXEC_URL_HERE";
 
   const config = Object.assign(
     {},
