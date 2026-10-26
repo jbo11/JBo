@@ -844,16 +844,7 @@ musicToggle.addEventListener("click", async (e) => {
   const normalMessage =
     "There’s a legendary sequence hidden here...";
   const secretMessage = `
-    <strong>U</strong>nder
-    <strong>U</strong>nknown
-    <strong>D</strong>epths,
-    <strong>D</strong>ark
-    <strong>L</strong>egends
-    <strong>R</strong>emain;
-    <strong>L</strong>ost
-    <strong>R</strong>elics
-    <strong>B</strong>ring
-    <strong>A</strong>dventure
+    <strong>↑ ↑ ↓ ↓ ← → ← → B A</strong>
   `;
   let audio = null;
   let activated = false;
